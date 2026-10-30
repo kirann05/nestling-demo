@@ -1,0 +1,1879 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Nestling: kidswear and home textiles cut from matching prints. Concept demo.">
+<meta property="og:title" content="Nestling">
+<meta property="og:description" content="Made from the same cloth. Kidswear and home textiles in four matching prints.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 40'%3E%3Cellipse cx='24' cy='16.5' rx='5.6' ry='6.8' fill='%23D9A85B'/%3E%3Cpath d='M2 9.5C6 9 8 13.5 9 17.5c1.6 6.6 7.4 10.5 15 10.5s13.6-4 15-11c-5.6 4.2-24.4 4.2-30 0 5 6.4 25 6.6 30 .6' fill='none' stroke='%234F6B5E' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Nestling Store</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap">
+<style>
+/* Layout: sticky header, curtain hero (copy left, window right), then category panels, the print switcher, new pieces, ordering steps. Shop, checkout and order are hash views; product, bag and sign-in are overlays. */
+:root{
+  --oat:#F3EDE2;       /* page */
+  --paper:#FBF8F2;     /* raised surfaces */
+  --wall:#EDE4D3;      /* hero wall, plates */
+  --sage:#8FA89A;      /* primary hue */
+  --sage-deep:#4F6B5E; /* buttons, links */
+  --powder:#B9CCD8;    /* cool note */
+  --honey:#D9A85B;     /* warm accent, used sparingly */
+  --ink:#22343A;       /* text */
+  --ink-soft:#56676C;
+  --line:rgba(34,52,58,.13);
+  --line-strong:rgba(34,52,58,.26);
+  --t-sage:#E1E9E3; --t-powder:#E2EAF0; --t-honey:#F3E6CF; --t-oat:#EAE1D0;
+  --error:#A4493D;
+  --f-display:"Young Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r-sm:10px; --r-md:18px; --r-lg:30px;
+  --max:1200px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--oat);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--oat)}
+body.locked{overflow:hidden}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--sage-deep);outline-offset:3px;border-radius:6px}
+.muted{color:var(--ink-soft)}
+.wrap{max-width:var(--max);margin-inline:auto;padding-left:max(clamp(16px,4vw,40px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,40px),env(safe-area-inset-right,0px))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;font-weight:600;font-size:15px;text-decoration:none;transition:background .2s,border-color .2s,transform .2s var(--ease)}
+.btn:hover{background:rgba(34,52,58,.05)}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--sage-deep);border-color:var(--sage-deep);color:var(--paper)}
+.btn-primary:hover{background:#435D51}
+.btn-block{width:100%}
+.btn-small{min-height:38px;padding:0 16px;font-size:14px}
+.link-btn{background:none;border:0;padding:0;color:var(--sage-deep);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.icon-btn{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;position:relative}
+.icon-btn:hover{background:rgba(34,52,58,.06)}
+.icon-btn svg{width:22px;height:22px}
+
+/* Header */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(243,237,226,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.head-row{display:flex;align-items:center;gap:20px;height:70px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.brand svg{width:46px;height:38px;overflow:visible}
+.brand-word{font-family:var(--f-display);font-size:25px;letter-spacing:-.01em}
+.logo-thread{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.8s .15s var(--ease) forwards}
+.logo-egg{transform-origin:24px 17px;transform:scale(0);animation:pop .5s 1.35s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{to{transform:scale(1)}}
+.main-nav{display:flex;gap:4px}
+.main-nav button{background:none;border:0;padding:10px 12px;border-radius:999px;font-weight:500;font-size:15px}
+.main-nav button:hover{background:rgba(34,52,58,.06)}
+.head-search{flex:1;max-width:360px;margin-left:auto;display:flex;align-items:center;gap:8px;height:44px;padding:0 16px;border-radius:999px;background:var(--paper);border:1px solid var(--line)}
+.head-search svg{width:18px;height:18px;flex-shrink:0;color:var(--ink-soft)}
+.head-search input{border:0;background:transparent;outline:none;width:100%;min-width:0;font-size:15px}
+.head-search:focus-within{border-color:var(--sage-deep)}
+.head-actions{display:flex;align-items:center;gap:2px}
+.only-mobile{display:none}
+.avatar{width:30px;height:30px;border-radius:999px;background:var(--sage);color:var(--paper);display:grid;place-items:center;font-weight:700;font-size:14px}
+.bag-count{position:absolute;top:4px;right:2px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--honey);color:var(--ink);font-size:11px;font-weight:700;display:grid;place-items:center}
+.bag-count.bump{animation:bump .45s var(--ease)}
+@keyframes bump{40%{transform:scale(1.35)}}
+
+/* Hero: illustrated play scene */
+.hero{position:relative;height:max(580px,min(88vh,56.25vw));overflow:hidden;background:#F1EADE;isolation:isolate}
+.stage{position:absolute;inset:0;z-index:0;overflow:hidden}
+.stage .scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+.voile{position:absolute;inset:0;background:rgba(248,245,238,.36);-webkit-backdrop-filter:blur(9px) saturate(.9);backdrop-filter:blur(9px) saturate(.9);pointer-events:none}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.voile{background:rgba(248,245,238,.74)}}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.hero-note{margin:0 0 0 auto;padding:8px 14px;border-radius:999px;background:rgba(251,248,242,.7);font-size:13px;color:var(--ink-soft);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:opacity .6s}
+#cottonFx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:35}
+.hero-inner{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding-block:clamp(44px,6vw,92px) clamp(22px,3vw,36px)}
+.hero-copy{display:flex;flex-direction:column;gap:26px;max-width:min(600px,46vw);min-width:0}
+.hero-title{font-size:clamp(48px,6.3vw,112px);line-height:.95;letter-spacing:-.025em}
+.hero-title span{display:block;opacity:0;transform:translateY(.35em);animation:rise 1.1s var(--ease) forwards}
+.hero-title span:nth-child(2){animation-delay:.14s}
+.hero .lede,.hero .cta-row{opacity:0;animation:rise 1s .42s var(--ease) forwards}
+.hero .cta-row{animation-delay:.56s}
+@keyframes rise{to{opacity:1;transform:none}}
+.lede{font-size:clamp(17px,1.5vw,20px);max-width:29em;color:var(--ink-soft)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn-glass{background:rgba(251,248,242,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-color:rgba(34,52,58,.22)}
+.btn-glass:hover{background:rgba(251,248,242,.85)}
+.hero-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 24px}
+.facts{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px;color:var(--ink-soft)}
+.facts li{display:flex;align-items:center;gap:8px}
+.facts li::before{content:"";width:7px;height:7px;border-radius:999px;background:var(--sage-deep)}
+@media (max-width:1099px){
+  .hero{height:auto;display:flex;flex-direction:column}
+  .hero-inner{display:contents}
+  .hero-copy{order:1;max-width:none;padding-block:40px 8px;padding-left:max(clamp(16px,4vw,40px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,40px),env(safe-area-inset-right,0px))}
+  .stage{order:2;position:relative;inset:auto;width:100%;aspect-ratio:820/510}
+  .hero-foot{order:3;padding-block:16px 28px;padding-left:max(clamp(16px,4vw,40px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,40px),env(safe-area-inset-right,0px))}
+  .hero-title{font-size:clamp(46px,9vw,84px)}
+}
+
+/* Sections */
+.section{padding-block:clamp(56px,8vw,112px)}
+.section-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px;margin-bottom:clamp(24px,3vw,40px)}
+.section-head h2{font-size:clamp(32px,4vw,52px)}
+.section-head p{max-width:34em;color:var(--ink-soft)}
+
+/* Statement with scroll-lit words */
+.statement{padding-block:clamp(72px,11vw,150px) 0;overflow:hidden}
+.statement-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(36px,6vw,96px);align-items:center}
+.say{font-family:var(--f-display);font-size:clamp(30px,3.5vw,54px);line-height:1.15;letter-spacing:-.015em;max-width:20ch;text-wrap:pretty}
+.flow{margin:0;min-width:0}
+.flow svg{width:100%;max-width:520px;height:auto;display:block;margin-left:auto;overflow:visible}
+.flow .ft{font-family:var(--f-display);font-size:30px;fill:var(--ink)}
+.flow .fc{font-family:var(--f-body);font-size:17px;fill:var(--ink-soft)}
+.flow .fl{font-family:var(--f-body);font-size:17px;font-weight:600;fill:var(--ink)}
+.flow .disc{fill:var(--paper);stroke:var(--line-strong)}
+.flow .ring{fill:none;stroke:var(--sage-deep);stroke-width:2;opacity:0;transition:opacity .5s}
+.flow .on .ring{opacity:1}
+.fnode{transform-box:fill-box;transform-origin:center}
+.fnode.got{animation:got .55s var(--ease)}
+@keyframes got{35%{transform:scale(1.1)}}
+.thread{fill:none;stroke:var(--sage-deep);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.bead{fill:var(--honey);opacity:0;transition:opacity .3s}
+.say .w{color:#A7B1AD;transition:color .35s}
+.say .w.lit{color:var(--ink)}
+.band{margin:clamp(48px,7vw,96px) 0 0;height:clamp(260px,42vw,560px);overflow:hidden;position:relative}
+.band img{position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;will-change:transform}
+
+/* Photo stories */
+.story{display:grid;gap:clamp(72px,10vw,140px)}
+.story-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,6vw,96px);align-items:center}
+.story-grid.flip .story-media{order:2}
+.story-media{position:relative;padding-bottom:clamp(40px,6vw,80px);min-width:0}
+.ph{margin:0;overflow:hidden;border-radius:var(--r-lg);background:var(--wall);position:relative}
+.ph img{width:100%;height:118%;object-fit:cover;display:block;position:relative;top:-9%;will-change:transform}
+.ph-main{aspect-ratio:4/5;width:78%}
+.ph-inset{position:absolute;right:0;bottom:0;width:42%;aspect-ratio:4/5;border:8px solid var(--oat);border-radius:24px}
+.flip .ph-main{margin-left:auto}
+.flip .ph-inset{right:auto;left:0}
+.story-copy{display:flex;flex-direction:column;gap:16px;min-width:0;max-width:480px}
+.story-copy h2{font-size:clamp(38px,4.6vw,64px)}
+.story-sub{color:var(--sage-deep);font-weight:600}
+.story-copy > p:not(.story-sub){color:var(--ink-soft);font-size:17px}
+.story-copy .cat-list{margin-top:10px}
+.cat-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
+.cat-list button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 2px;background:none;border:0;border-top:1px solid var(--line-strong);font-size:17px;font-weight:500;text-align:left;transition:padding .3s var(--ease),color .2s}
+.cat-list li:last-child button{border-bottom:1px solid var(--line-strong)}
+.cat-list button span{color:var(--ink-soft);font-weight:400;font-size:14px;font-variant-numeric:tabular-nums}
+.cat-list button:hover{padding-left:10px;color:var(--sage-deep)}
+
+/* How it works with photo */
+.how-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,6vw,88px);align-items:center}
+.how-photo{aspect-ratio:4/5}
+.how-body{min-width:0}
+.how .steps{grid-template-columns:1fr 1fr;gap:28px 24px}
+
+/* Print switcher */
+.prints{background:var(--paper);border-block:1px solid var(--line)}
+.prints-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,64px);align-items:center}
+.prints-copy{display:flex;flex-direction:column;gap:20px;min-width:0}
+.prints-copy h2{font-size:clamp(34px,4.4vw,56px)}
+.prints-copy > p{color:var(--ink-soft);max-width:30em}
+.print-list{display:flex;flex-direction:column;gap:8px}
+.print-opt{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;padding:10px 14px 10px 10px;border-radius:16px;border:1px solid transparent;background:none;text-align:left}
+.print-opt:hover{background:var(--oat)}
+.print-opt[aria-checked="true"]{background:var(--oat);border-color:var(--line-strong)}
+.print-opt svg{width:44px;height:44px}
+.print-opt b{display:block;font-weight:600}
+.print-opt small{display:block;color:var(--ink-soft);font-size:14px}
+.print-stage{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;min-width:0}
+.stage-card{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.art-stack{position:relative;border-radius:var(--r-md);overflow:hidden;aspect-ratio:6/7}
+.stage-card.home .art-stack{background:var(--wall)}
+.stage-card.kid .art-stack{background:var(--t-sage);transition:background .5s}
+.art-stack .layer{position:absolute;inset:0}
+.art-stack .layer svg{width:100%;height:100%;display:block}
+.art-stack .wipe{clip-path:inset(0 100% 0 0)}
+.art-stack .wipe.go{clip-path:inset(0 0 0 0);transition:clip-path .8s var(--ease)}
+.stage-card figcaption{display:flex;justify-content:space-between;gap:12px;font-weight:500;font-size:15px}
+.stage-card figcaption span{color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.stage-total{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;border-radius:var(--r-md);background:var(--oat)}
+.stage-total p{font-size:15px}
+
+/* Product cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px 20px}
+.card{display:flex;flex-direction:column;gap:12px;padding:0;border:0;background:none;text-align:left;min-width:0}
+.plate{position:relative;display:block;border-radius:var(--r-md);background:var(--tint,var(--wall));aspect-ratio:6/7;overflow:hidden}
+.plate svg{width:100%;height:100%;display:block;transition:transform .5s var(--ease)}
+.card:hover .plate svg{transform:translateY(-4px)}
+.tag{position:absolute;top:12px;left:12px;padding:4px 10px;border-radius:999px;background:var(--paper);font-size:12px;font-weight:600}
+.card-body{display:grid;gap:3px}
+.card-name{font-weight:600;font-size:16px}
+.card-meta{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--ink-soft)}
+.sw{width:16px;height:16px;flex-shrink:0}
+.card-price{font-variant-numeric:tabular-nums;font-size:15px}
+
+/* Steps */
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s}
+.steps li{display:flex;flex-direction:column;gap:10px;padding-top:18px;border-top:1px solid var(--line-strong);counter-increment:s}
+.steps li::before{content:counter(s);font-family:var(--f-display);font-size:28px;color:var(--sage-deep)}
+.steps b{font-weight:600}
+.steps p{color:var(--ink-soft);font-size:15px}
+.steps-cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* Footer */
+.site-footer{border-top:1px solid var(--line);padding-block:48px 40px;background:var(--paper)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+.foot-grid h4{margin:0 0 10px;font-size:14px;font-weight:600}
+.foot-grid ul{list-style:none;padding:0;margin:0;display:grid;gap:6px;color:var(--ink-soft);font-size:15px}
+.foot-grid ul button{background:none;border:0;padding:0;color:inherit}
+.foot-grid ul button:hover{color:var(--ink)}
+.demo-note{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-soft)}
+
+/* Shop view */
+.shop{padding-block:clamp(28px,4vw,48px) 80px;display:flex;flex-direction:column;gap:20px}
+.shop-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px}
+.shop-head h1{font-size:clamp(38px,5vw,60px)}
+.shop-tools{display:flex;flex-wrap:wrap;gap:12px}
+.field-search{flex:1;min-width:220px;display:flex;align-items:center;gap:10px;height:50px;padding:0 18px;border-radius:999px;background:var(--paper);border:1px solid var(--line-strong)}
+.field-search:focus-within{border-color:var(--sage-deep)}
+.field-search svg{width:18px;height:18px;color:var(--ink-soft);flex-shrink:0}
+.field-search input{border:0;outline:none;background:transparent;width:100%;min-width:0;font-size:16px}
+.select{height:50px;padding:0 40px 0 18px;border-radius:999px;border:1px solid var(--line-strong);background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%2322343A' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 16px center;appearance:none;-webkit-appearance:none;font-size:15px}
+.filter-block{display:grid;gap:8px}
+.filter-label{font-size:13px;font-weight:600;color:var(--ink-soft)}
+.chip-row{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
+.chip-row::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;font-size:14px;font-weight:500;white-space:nowrap}
+.chip:hover{background:rgba(34,52,58,.05)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip .sw{width:18px;height:18px}
+.chip-sep{flex-shrink:0;width:1px;background:var(--line-strong);margin:6px 4px}
+.empty{padding:56px 24px;text-align:center;border:1px dashed var(--line-strong);border-radius:var(--r-md);display:grid;gap:12px;justify-items:center}
+.empty h3{font-size:26px}
+
+/* Overlays */
+.scrim{position:fixed;inset:0;z-index:70;background:rgba(34,52,58,.32);opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s}
+.scrim.open{opacity:1;visibility:visible;transition:opacity .35s}
+.drawer{position:fixed;top:0;right:0;z-index:80;height:100%;width:min(500px,100%);background:var(--paper);display:flex;flex-direction:column;transform:translateX(104%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s;box-shadow:-30px 0 60px -40px rgba(34,52,58,.5);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.open{transform:none;visibility:visible;transition:transform .5s var(--ease)}
+.drawer-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 24px;border-bottom:1px solid var(--line)}
+.drawer-top h2{font-size:24px}
+.drawer-kicker{font-size:14px;color:var(--ink-soft)}
+.drawer-scroll{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px}
+.drawer-scroll > *{flex-shrink:0}
+.drawer-foot{padding:16px 24px 20px;border-top:1px solid var(--line);display:grid;gap:12px;background:var(--paper)}
+.pd-plate{border-radius:var(--r-md);aspect-ratio:1/1;overflow:hidden;background:var(--tint,var(--wall))}
+.pd-plate svg{width:100%;height:100%;display:block}
+#pdName{font-size:34px}
+.pd-price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.pd-price strong{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.pd-price span{font-size:13px}
+.pd-print{display:flex;align-items:center;gap:8px;font-size:15px}
+.pd-print .sw{width:20px;height:20px}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+legend{font-size:14px;font-weight:600;margin-bottom:10px;padding:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg span{display:inline-flex;align-items:center;min-height:42px;padding:0 16px;border-radius:12px;border:1px solid var(--line-strong);font-size:14px;font-weight:500;white-space:nowrap}
+.seg input:checked + span{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.seg input:focus-visible + span{outline:2px solid var(--sage-deep);outline-offset:2px}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:999px;height:44px}
+.stepper button{width:42px;height:42px;border:0;background:none;border-radius:999px;display:grid;place-items:center}
+.stepper button svg{width:16px;height:16px}
+.stepper output{min-width:28px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.stepper.small{height:36px}
+.stepper.small button{width:34px;height:34px}
+.pd-note{font-size:14px;color:var(--ink-soft);padding:14px 16px;border-radius:12px;background:var(--oat)}
+.matches h3{font-family:var(--f-body);font-size:14px;font-weight:600;margin-bottom:10px}
+.match-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.match{padding:0;border:0;background:none;text-align:left;display:grid;gap:6px;font-size:13px;min-width:0}
+.match .plate{aspect-ratio:1/1;border-radius:12px}
+.match b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Bag */
+.bag-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
+.bag-item{display:grid;grid-template-columns:76px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.bag-item .plate{aspect-ratio:1/1;border-radius:12px}
+.bag-item b{display:block;font-weight:600;font-size:15px}
+.bag-item small{display:block;color:var(--ink-soft);font-size:13px}
+.bag-item .right{display:grid;justify-items:end;gap:8px;font-variant-numeric:tabular-nums}
+.remove{font-size:13px;color:var(--ink-soft);background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:2px}
+.free-meter{display:grid;gap:8px;font-size:14px}
+.meter{height:6px;border-radius:999px;background:var(--wall);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--sage);border-radius:999px;transition:width .6s var(--ease)}
+.sum-row{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.sum-row.total{font-weight:700;font-size:18px}
+
+/* Modal */
+.modal{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:20px;visibility:hidden;pointer-events:none}
+.modal.open{visibility:visible;pointer-events:auto}
+.modal-card{width:min(440px,100%);background:var(--paper);border-radius:24px;padding:28px;display:grid;gap:18px;transform:translateY(16px);opacity:0;transition:transform .45s var(--ease),opacity .3s;box-shadow:0 40px 80px -40px rgba(34,52,58,.6);max-height:calc(100% - 20px);overflow-y:auto}
+.modal.open .modal-card{transform:none;opacity:1}
+.modal-head{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.modal-head h2{font-size:30px}
+.modal-head p{color:var(--ink-soft);margin-top:6px;font-size:15px}
+.form{display:grid;gap:14px}
+.field{display:grid;gap:6px;min-width:0;align-content:start}
+.field label{font-size:14px;font-weight:600}
+.field label small{font-weight:400;color:var(--ink-soft)}
+.input{width:100%;height:50px;padding:0 16px;border-radius:12px;border:1px solid var(--line-strong);background:var(--paper);font-size:16px}
+.input:focus{outline:none;border-color:var(--sage-deep);box-shadow:0 0 0 3px rgba(79,107,94,.15)}
+.input[aria-invalid="true"]{border-color:var(--error)}
+.prefix{display:flex;align-items:center;border:1px solid var(--line-strong);border-radius:12px;background:var(--paper)}
+.prefix span{padding:0 4px 0 16px;color:var(--ink-soft)}
+.prefix .input{border:0;height:48px;padding-left:6px}
+.prefix:focus-within{border-color:var(--sage-deep);box-shadow:0 0 0 3px rgba(79,107,94,.15)}
+.prefix.bad{border-color:var(--error)}
+.err{color:var(--error);font-size:13px}
+.hint{font-size:13px;color:var(--ink-soft)}
+.hint.ok{color:var(--sage-deep);font-weight:600}
+.otp{letter-spacing:.6em;font-size:24px;text-align:center;font-variant-numeric:tabular-nums}
+.demo-code{padding:12px 14px;border-radius:12px;background:var(--t-honey);font-size:14px}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* Checkout */
+.checkout{padding-block:clamp(28px,4vw,48px) 80px}
+.checkout h1{font-size:clamp(38px,5vw,58px);margin-bottom:28px}
+.co-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:start}
+.co-form{display:grid;gap:22px}
+.co-block{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:clamp(18px,2.5vw,28px);display:grid;gap:16px}
+.co-block-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.co-block h2{font-size:24px}
+.opt-list{display:grid;gap:10px}
+.opt{position:relative;display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:center;padding:14px 16px;border:1px solid var(--line-strong);border-radius:14px;cursor:pointer}
+.opt input{width:18px;height:18px;margin:0;accent-color:var(--sage-deep)}
+.opt b{font-weight:600;display:block}
+.opt small{color:var(--ink-soft);font-size:13px}
+.opt:has(input:checked){border-color:var(--sage-deep);background:var(--t-sage)}
+.opt .price{font-variant-numeric:tabular-nums;font-size:15px}
+.co-summary{position:sticky;top:calc(env(safe-area-inset-top,0px) + 90px);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:clamp(18px,2.5vw,28px);display:grid;gap:14px}
+.co-summary h2{font-size:24px}
+.co-items{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.co-items li{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;font-size:14px}
+.co-items .plate{aspect-ratio:1/1;border-radius:10px}
+.co-items b{display:block;font-weight:600}
+.co-items small{color:var(--ink-soft)}
+.divider{height:1px;background:var(--line)}
+.notice{font-size:13px;color:var(--ink-soft);padding:12px 14px;border-radius:12px;background:var(--oat)}
+
+/* Order confirmation */
+.order{padding-block:clamp(40px,6vw,80px) 96px;display:grid;gap:28px;max-width:760px}
+.order-mark{width:84px;height:84px}
+.order-mark circle{fill:var(--t-sage)}
+.order-mark path{fill:none;stroke:var(--sage-deep);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.order.on .order-mark path{animation:draw 1s .2s var(--ease) forwards}
+.order h1{font-size:clamp(40px,6vw,68px)}
+.order-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.order-meta div{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;display:grid;gap:4px;min-width:0}
+.order-meta small{color:var(--ink-soft);font-size:13px}
+.order-meta b{font-weight:600;overflow-wrap:anywhere}
+.track{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.track::before{content:"";position:absolute;left:12.5%;right:12.5%;top:11px;height:2px;background:var(--line-strong)}
+.track::after{content:"";position:absolute;left:12.5%;top:11px;height:2px;width:0;background:var(--sage-deep);transition:width 1.2s .6s var(--ease)}
+.order.on .track::after{width:12%}
+.track li{position:relative;display:grid;justify-items:center;gap:8px;text-align:center;font-size:13px;color:var(--ink-soft)}
+.track li::before{content:"";width:24px;height:24px;border-radius:999px;background:var(--paper);border:2px solid var(--line-strong);position:relative;z-index:1}
+.track li.done{color:var(--ink);font-weight:600}
+.track li.done::before{background:var(--sage-deep);border-color:var(--sage-deep);box-shadow:inset 0 0 0 5px var(--paper)}
+
+/* Toast */
+.toast{position:fixed;left:50%;top:calc(84px + env(safe-area-inset-top,0px));z-index:100;transform:translate(-50%,-16px);opacity:0;padding:12px 20px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:14px;font-weight:500;transition:transform .4s var(--ease),opacity .3s;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0);opacity:1}
+
+/* Responsive */
+@media (max-width:980px){
+  .main-nav{display:none}
+}
+@media (max-width:860px){
+  .head-search{display:none}
+  .only-mobile{display:inline-grid}
+  .head-actions{margin-left:auto}
+  .story-grid,.how-grid,.statement-grid{grid-template-columns:1fr}
+  .flow svg{margin-inline:auto}
+  .story-grid.flip .story-media{order:0}
+  .story-copy{max-width:none}
+  .how-photo{max-width:520px}
+  .prints-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .co-grid{grid-template-columns:1fr}
+  .co-summary{position:static}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .foot-grid > div:first-child{grid-column:1/-1}
+}
+@media (max-width:560px){
+  .head-row{height:62px;gap:8px}
+  .brand-word{font-size:22px}
+  .brand svg{width:40px;height:33px}
+  .hero-copy{gap:20px}
+  .cta-row .btn{flex:1 1 auto}
+  .ph-main{width:84%}
+  .ph-inset{width:46%;border-width:6px}
+  .how .steps{grid-template-columns:1fr}
+  .print-stage{grid-template-columns:1fr 1fr;gap:10px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
+  .card-name{font-size:15px}
+  .steps{grid-template-columns:1fr}
+  .row-2{grid-template-columns:1fr}
+  .order-meta{grid-template-columns:1fr}
+  .drawer{width:100%}
+  .modal{align-items:end;padding:0}
+  .modal-card{border-radius:24px 24px 0 0;padding:24px max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));width:100%;max-height:92%}
+  .match-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<!-- Shared fabric prints and shading, referenced by every illustration -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="sprig">
+      <path d="M0 16 Q5 8 14 0" fill="none" stroke="#6F8C7E" stroke-width="1.2" stroke-linecap="round"/>
+      <g fill="#8FA89A">
+        <ellipse cx="3.5" cy="10.5" rx="3.6" ry="1.5" transform="rotate(-70 3.5 10.5)"/>
+        <ellipse cx="7" cy="6.5" rx="3.4" ry="1.4" transform="rotate(-55 7 6.5)"/>
+        <ellipse cx="10.5" cy="3" rx="3" ry="1.3" transform="rotate(-40 10.5 3)"/>
+        <ellipse cx="6.5" cy="12" rx="3.4" ry="1.5" transform="rotate(10 6.5 12)"/>
+        <ellipse cx="10" cy="8.4" rx="3.2" ry="1.4" transform="rotate(20 10 8.4)"/>
+        <ellipse cx="13" cy="4.6" rx="2.6" ry="1.2" transform="rotate(30 13 4.6)"/>
+      </g>
+    </g>
+    <pattern id="p-fern" width="44" height="44" patternUnits="userSpaceOnUse">
+      <rect width="44" height="44" fill="#F7F2E7"/>
+      <use href="#sprig" x="5" y="24"/>
+      <use href="#sprig" x="27" y="3"/>
+      <circle cx="35" cy="34" r="1.3" fill="#D9A85B"/>
+    </pattern>
+    <pattern id="p-cloud" width="56" height="48" patternUnits="userSpaceOnUse">
+      <rect width="56" height="48" fill="#F8F4EC"/>
+      <g fill="#B9CCD8">
+        <circle cx="14" cy="17" r="5.5"/><circle cx="21" cy="13" r="7.5"/><circle cx="28" cy="17" r="5.5"/><rect x="8.5" y="16" width="25" height="7" rx="3.5"/>
+      </g>
+      <g fill="#C9D8E1" transform="translate(30 28) scale(.62)">
+        <circle cx="14" cy="17" r="5.5"/><circle cx="21" cy="13" r="7.5"/><circle cx="28" cy="17" r="5.5"/><rect x="8.5" y="16" width="25" height="7" rx="3.5"/>
+      </g>
+      <circle cx="6" cy="40" r="1.2" fill="#D9A85B"/>
+    </pattern>
+    <pattern id="p-dot" width="22" height="22" patternUnits="userSpaceOnUse">
+      <rect width="22" height="22" fill="#FAF4E8"/>
+      <circle cx="5.5" cy="5.5" r="3" fill="#D9A85B"/>
+      <circle cx="16.5" cy="16.5" r="3" fill="#D9A85B"/>
+      <circle cx="16.5" cy="5.5" r="1.1" fill="#8FA89A"/>
+    </pattern>
+    <pattern id="p-stripe" width="22" height="22" patternUnits="userSpaceOnUse">
+      <rect width="22" height="22" fill="#F5F0E6"/>
+      <rect x="0" width="7" height="22" fill="#B9CCD8"/>
+      <rect x="11" width="1.2" height="22" fill="#22343A" opacity=".22"/>
+    </pattern>
+    <pattern id="p-linen" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="18" height="18" fill="#E7DCC8"/>
+      <path d="M0 4.5H18M0 12H10M12 15H18" stroke="#DBCDB4" stroke-width=".9"/>
+      <path d="M5 0V18M14 0V9" stroke="#EEE6D6" stroke-width=".7"/>
+    </pattern>
+    <linearGradient id="g-shade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".32"/>
+      <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#22343A" stop-opacity=".16"/>
+    </linearGradient>
+    <linearGradient id="g-folds" x1="0" y1="0" x2=".142" y2="0" spreadMethod="repeat">
+      <stop offset="0" stop-color="#fff" stop-opacity=".26"/>
+      <stop offset=".5" stop-color="#22343A" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".26"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="wrap head-row">
+    <a class="brand" href="#home" aria-label="Nestling home">
+      <svg viewBox="0 0 48 40" aria-hidden="true">
+        <ellipse class="logo-egg" cx="24" cy="16.5" rx="5.6" ry="6.8" fill="#D9A85B"/>
+        <path class="logo-thread" pathLength="1" d="M2 9.5C6 9 8 13.5 9 17.5c1.6 6.6 7.4 10.5 15 10.5s13.6-4 15-11c-5.6 4.2-24.4 4.2-30 0 5 6.4 25 6.6 30 0.6M40 17c2-1.5 4-1.8 6-1.2" fill="none" stroke="#4F6B5E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-word">Nestling</span>
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <button type="button" data-nav="g-kids">Kids wear</button>
+      <button type="button" data-nav="g-home">Home</button>
+      <button type="button" data-nav="prints">Prints</button>
+    </nav>
+    <form class="head-search" id="headSearch" role="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <label class="sr" for="headQ">Search the store</label>
+      <input id="headQ" type="search" placeholder="Search pajamas, curtains, Fern" autocomplete="off">
+    </form>
+    <div class="head-actions">
+      <button class="icon-btn only-mobile" type="button" id="mSearch" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" type="button" id="accountBtn" aria-label="Sign in">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>
+      </button>
+      <button class="icon-btn" type="button" id="bagBtn" aria-label="Bag, 0 items">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        <span class="bag-count" id="bagCount" hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HOME -->
+  <div id="view-home" class="view">
+    <section class="hero" id="heroVisual">
+      <div class="stage" id="stage">
+      <svg class="scene" id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMax slice" role="img" aria-label="Illustration: two children build a small play tent from a Fern-print cloth on a rug beside a sunny window">
+        <defs>
+          <linearGradient id="wallG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5EFE4"/><stop offset="1" stop-color="#ECE2D0"/></linearGradient>
+          <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4D3B7"/><stop offset="1" stop-color="#D9C4A3"/></linearGradient>
+          <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C3D6E2"/><stop offset=".62" stop-color="#E9E7DD"/><stop offset="1" stop-color="#F5E2BD"/></linearGradient>
+          <radialGradient id="sunG"><stop offset="0" stop-color="#F3D69E" stop-opacity=".95"/><stop offset="1" stop-color="#F3D69E" stop-opacity="0"/></radialGradient>
+          <radialGradient id="glowG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF7E6" stop-opacity=".75"/><stop offset="1" stop-color="#FFF7E6" stop-opacity="0"/></radialGradient>
+          <linearGradient id="beamG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF9EC" stop-opacity=".5"/><stop offset="1" stop-color="#FFF9EC" stop-opacity="0"/></linearGradient>
+          <linearGradient id="sheerG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".78"/><stop offset=".3" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#F1ECE2" stop-opacity=".62"/><stop offset=".8" stop-color="#fff" stop-opacity=".48"/><stop offset="1" stop-color="#EDE6D9" stop-opacity=".66"/></linearGradient>
+          <linearGradient id="clothShade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#22343A" stop-opacity=".16"/></linearGradient>
+          <linearGradient id="doorG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3E534C" stop-opacity=".55"/><stop offset="1" stop-color="#2A3B36" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="poleG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D9B47E"/><stop offset="1" stop-color="#B98F5C"/></linearGradient>
+          <clipPath id="winC"><path d="M1340 594V255a105 105 0 0 1 210 0v339z"/></clipPath>
+          <mask id="clothMask" maskUnits="userSpaceOnUse" x="880" y="380" width="400" height="460">
+            <g id="maskG" transform="translate(0 840)"><path d="M880-500H1280V0Q1260 14 1240 0T1200 0T1160 0T1120 0T1080 0T1040 0T1000 0T960 0T920 0T880 0Z" fill="#fff"/></g>
+          </mask>
+        </defs>
+
+        <rect width="1600" height="900" fill="url(#wallG)"/>
+        <ellipse cx="1180" cy="430" rx="420" ry="300" fill="url(#glowG)"/>
+        <rect y="712" width="1600" height="12" fill="#EADFCB"/>
+        <rect y="722" width="1600" height="178" fill="url(#floorG)"/>
+        <g stroke="rgba(34,52,58,.06)" stroke-width="2"><path d="M0 768H1600M0 826H1600M0 884H1600"/><path d="M220 724v44M640 768v58M980 724v44M360 826v58M1240 826v58M1460 768v58"/></g>
+
+        <!-- Window -->
+        <g clip-path="url(#winC)">
+          <rect x="1330" y="140" width="230" height="460" fill="url(#skyG)"/>
+          <circle cx="1478" cy="392" r="80" fill="url(#sunG)"/>
+          <circle cx="1478" cy="392" r="25" fill="#E2B668"/>
+          <path d="M1330 470q60-34 120-12t110-10v152h-230z" fill="#BCCABE"/>
+          <ellipse cx="1376" cy="460" rx="7" ry="19" fill="#86A092"/>
+          <path d="M1330 512q70-30 140-6t90-8v102h-230z" fill="#8FA89A"/>
+        </g>
+        <path d="M1340 594V255a105 105 0 0 1 210 0v339" fill="none" stroke="#FBF8F2" stroke-width="11"/>
+        <path d="M1445 150v444M1340 400h210" stroke="#FBF8F2" stroke-width="6"/>
+        <rect x="1322" y="592" width="246" height="15" rx="3" fill="#DCCBAE"/>
+        <path d="M1484 592l-4-24h28l-4 24z" fill="#6F8C7E"/>
+        <g fill="#8FA89A"><ellipse cx="1487" cy="556" rx="5" ry="13" transform="rotate(-24 1487 556)"/><ellipse cx="1495" cy="551" rx="5" ry="16"/><ellipse cx="1503" cy="557" rx="5" ry="12" transform="rotate(28 1503 557)"/></g>
+        <path d="M1340 598H1550L1500 900H1050Z" fill="url(#beamG)"/>
+        <!-- Sheer curtains -->
+        <g id="curWind">
+          <path d="M1306 126H1584" stroke="#22343A" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>
+          <circle cx="1303" cy="126" r="6" fill="#D9A85B"/><circle cx="1587" cy="126" r="6" fill="#D9A85B"/>
+          <g id="curL"><path d="M1312 130H1374L1370 640Q1342 650 1314 640Z" fill="url(#sheerG)"/><path d="M1372 132L1368 640" stroke="#8FA89A" stroke-width="2.5" opacity=".7"/></g>
+          <g id="curR"><path d="M1516 130H1578L1576 640Q1548 650 1520 640Z" fill="url(#sheerG)"/><path d="M1518 132L1522 640" stroke="#8FA89A" stroke-width="2.5" opacity=".7"/></g>
+        </g>
+
+        <!-- Rug -->
+        <ellipse cx="1086" cy="810" rx="304" ry="58" fill="url(#p-linen)"/>
+        <ellipse cx="1086" cy="810" rx="304" ry="58" fill="none" stroke="rgba(34,52,58,.12)"/>
+        <ellipse cx="1086" cy="810" rx="262" ry="46" fill="none" stroke="#8FA89A" stroke-width="6" opacity=".75"/>
+        <ellipse cx="1086" cy="810" rx="222" ry="37" fill="none" stroke="#D9A85B" stroke-width="3" opacity=".8"/>
+
+        <!-- Play tent -->
+        <g id="poleL"><path d="M950 800L1099 437" stroke="url(#poleG)" stroke-width="11" stroke-linecap="round"/></g>
+        <g id="poleR"><path d="M1222 800L1073 437" stroke="url(#poleG)" stroke-width="11" stroke-linecap="round"/></g>
+        <g id="cloth" mask="url(#clothMask)">
+          <g id="clothInner">
+            <path d="M1086 470L957 797Q1086 820 1215 797Z" fill="url(#p-fern)"/>
+            <path d="M1086 470L957 797Q1086 820 1215 797Z" fill="url(#clothShade)"/>
+            <path d="M1086 474Q1062 640 1030 806M1086 474Q1112 640 1144 806" stroke="rgba(34,52,58,.07)" stroke-width="9" fill="none"/>
+            <path d="M1086 470L957 797Q1086 820 1215 797Z" fill="none" stroke="rgba(34,52,58,.2)" stroke-width="1.5"/>
+          </g>
+        </g>
+        <path id="door" d="M1086 586Q1068 700 1042 807Q1086 815 1130 807Q1104 700 1086 586Z" fill="url(#doorG)"/>
+        <g id="cushion"><ellipse cx="1086" cy="799" rx="36" ry="13" fill="url(#p-dot)"/><ellipse cx="1086" cy="799" rx="36" ry="13" fill="none" stroke="rgba(34,52,58,.25)"/></g>
+        <g id="flaps">
+          <ellipse cx="1052" cy="706" rx="9" ry="24" transform="rotate(18 1052 706)" fill="url(#p-fern)" stroke="rgba(34,52,58,.22)"/>
+          <ellipse cx="1120" cy="706" rx="9" ry="24" transform="rotate(-18 1120 706)" fill="url(#p-fern)" stroke="rgba(34,52,58,.22)"/>
+          <circle cx="1052" cy="704" r="4.5" fill="#D9A85B"/><circle cx="1120" cy="704" r="4.5" fill="#D9A85B"/>
+        </g>
+        <g id="tie"><path d="M1086 471q-9 12-15 23M1086 471q9 12 13 24" stroke="#D9A85B" stroke-width="3.5" stroke-linecap="round" fill="none"/><circle cx="1086" cy="471" r="7" fill="#D9A85B"/></g>
+        <path id="string" d="M1092 462Q1200 452 1336 296" fill="none" stroke="rgba(34,52,58,.45)" stroke-width="1.6"/>
+        <g id="flags"></g>
+
+        <!-- Blocks -->
+        <rect x="1290" y="772" width="30" height="30" rx="4" fill="#E2B66A"/>
+        <rect x="1325" y="779" width="24" height="24" rx="4" fill="#8FA89A"/>
+        <rect x="1297" y="745" width="26" height="26" rx="4" fill="#B9CCD8" transform="rotate(-8 1310 758)"/>
+
+        <g id="kids"></g>
+      </svg>
+      <div class="voile" id="voile" aria-hidden="true"></div>
+      <canvas id="curtain" aria-hidden="true"></canvas>
+      </div>
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <h1 class="hero-title"><span>Made from</span> <span>the same cloth.</span></h1>
+          <p class="lede">Soft cotton clothes for little ones, and the curtains, quilts and cushions for the rooms they grow up in. Every piece is cut from one of four matching prints.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#shop">Shop the prints</a>
+            <button class="btn btn-glass" type="button" data-open-auth>Create an account</button>
+          </div>
+        </div>
+        <div class="hero-foot">
+          <ul class="facts">
+            <li>Washed cotton and linen</li>
+            <li>Delivery across India</li>
+            <li>15-day returns</li>
+          </ul>
+          <p class="hero-note" id="heroNote">Move your cursor to part the curtain</p>
+          <button class="btn btn-small btn-glass" type="button" id="replay" hidden>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+            Watch them build it again
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="statement" id="statement">
+      <div class="wrap statement-grid">
+        <p class="say" id="say">Nestling makes soft cotton clothes for children, and the curtains, quilts and cushions for the rooms they grow up in. Four prints, woven once, cut for both.</p>
+        <figure class="flow" id="flow">
+          <svg viewBox="0 0 520 760" role="img" aria-labelledby="flowCap">
+            <defs>
+              <radialGradient id="cottonG" cx=".38" cy=".34" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#F4EFE6"/><stop offset="1" stop-color="#D6CDBD"/></radialGradient>
+            </defs>
+            <path class="thread" id="th1" pathLength="1" d="M64 118V200"/>
+            <path class="thread" id="th2" pathLength="1" d="M64 308V390"/>
+            <path class="thread br" pathLength="1" d="M64 498V588"/>
+            <path class="thread br" pathLength="1" d="M64 498C64 550 196 536 196 588"/>
+            <path class="thread br" pathLength="1" d="M64 498C64 550 328 536 328 588"/>
+            <path class="thread br" pathLength="1" d="M64 498C64 550 460 536 460 588"/>
+            <circle class="bead" id="bead" r="4.5" cx="64" cy="118"/>
+
+            <g transform="translate(64 64)"><g class="fnode" id="fnCotton">
+              <circle class="ring" r="60"/><circle class="disc" r="52"/>
+              <g fill="#8C6B4E"><path d="M-3-4L-9-30 3-6Z"/><path d="M4-3L30-9 6 3Z"/><path d="M3 4L9 30-3 6Z"/><path d="M-4 3L-30 9-6-3Z"/></g>
+              <g fill="url(#cottonG)" stroke="rgba(34,52,58,.08)"><circle cx="-13" cy="-9" r="15"/><circle cx="13" cy="-11" r="15"/><circle cx="-11" cy="12" r="15"/><circle cx="14" cy="11" r="15"/><circle cx="0" cy="0" r="16"/></g>
+            </g></g>
+            <text class="ft" x="140" y="58">Cotton</text>
+            <text class="fc" x="140" y="88">Picked, cleaned and combed</text>
+
+            <g transform="translate(64 254)"><g class="fnode" id="fnThread">
+              <circle class="ring" r="60"/><circle class="disc" r="52"/>
+              <rect x="-15" y="-21" width="30" height="42" fill="#8FA89A"/>
+              <path d="M-15-14H15M-15-7H15M-15 0H15M-15 7H15M-15 14H15" stroke="#7B9787" stroke-width="1.6"/>
+              <rect x="-24" y="-30" width="48" height="10" rx="4" fill="#D9B47E"/><rect x="-24" y="20" width="48" height="10" rx="4" fill="#C9A06B"/>
+              <path d="M15 2C32 2 36 18 24 30" stroke="#4F6B5E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            </g></g>
+            <text class="ft" x="140" y="248">Thread</text>
+            <text class="fc" x="140" y="278">Spun into soft, even yarn</text>
+
+            <g transform="translate(64 444)"><g class="fnode" id="fnFabric">
+              <circle class="ring" r="60"/><circle class="disc" r="52"/>
+              <rect x="-30" y="-22" width="54" height="34" rx="6" fill="url(#p-cloud)" stroke="rgba(34,52,58,.22)" transform="rotate(-9)"/>
+              <rect x="-25" y="-10" width="54" height="34" rx="6" fill="url(#p-fern)" stroke="rgba(34,52,58,.22)"/>
+              <path d="M-25 4H29" stroke="rgba(34,52,58,.14)" stroke-width="2"/>
+            </g></g>
+            <text class="ft" x="140" y="438">Fabric</text>
+            <text class="fc" x="140" y="468">Woven once, then cut for both</text>
+
+            <g id="fnProducts"></g>
+          </svg>
+          <figcaption class="sr" id="flowCap">How our cotton becomes your pieces: cotton is spun into thread, the thread is woven into fabric, and the fabric is cut into clothing, curtains, quilts and cushions.</figcaption>
+        </figure>
+      </div>
+      <figure class="band" aria-hidden="true"><img data-speed=".12" src="img/fern.webp" alt="" width="1400" height="933" loading="lazy"></figure>
+    </section>
+
+    <section class="section story" id="categories">
+      <div class="wrap story-grid">
+        <div class="story-media">
+          <figure class="ph ph-main"><img data-speed=".05" src="img/kids-a.webp" alt="A young girl in a pale pink cotton dress looks over her shoulder" width="1100" height="1375" loading="lazy"></figure>
+          <figure class="ph ph-inset"><img data-speed="-.04" src="img/kids-b.webp" alt="A toddler in a knitted hat and green outfit explores the grass" width="800" height="1000" loading="lazy"></figure>
+        </div>
+        <div class="story-copy">
+          <h2>For little ones</h2>
+          <p class="story-sub">Newborn to 8 years</p>
+          <p>Cotton muslin, jersey and poplin, washed soft before it reaches you. Cut with room for crawling, climbing and a growth spurt or two.</p>
+          <ul class="cat-list" id="catListKids"></ul>
+        </div>
+      </div>
+      <div class="wrap story-grid flip">
+        <div class="story-media">
+          <figure class="ph ph-main"><img data-speed=".05" src="img/home-a.webp" alt="A woven oat cotton throw with a hand-knotted fringe" width="1100" height="1375" loading="lazy"></figure>
+          <figure class="ph ph-inset"><img data-speed="-.04" src="img/home-b.webp" alt="Garden flowers in a pale sage jug on a linen-covered table" width="800" height="1000" loading="lazy"></figure>
+        </div>
+        <div class="story-copy">
+          <h2>For the rooms they grow in</h2>
+          <p class="story-sub">Nursery and family rooms</p>
+          <p>Curtains sized for Indian windows and doors, quilts for cots and single beds, and cushions in the same four prints as the clothes.</p>
+          <ul class="cat-list" id="catListHome"></ul>
+        </div>
+      </div>
+    </section>
+    <section class="section prints" id="prints">
+      <div class="wrap prints-grid">
+        <div class="prints-copy">
+          <h2>Pick a print. See it on both.</h2>
+          <p>Each print is woven once and cut for both rooms and children, so a pajama set can match the curtains it sleeps beside.</p>
+          <div class="print-list" id="printList" role="radiogroup" aria-label="Prints"></div>
+        </div>
+        <div class="print-stage">
+          <figure class="stage-card home">
+            <div class="art-stack" id="stageHome"><div class="layer base"></div><div class="layer wipe"></div></div>
+            <figcaption><b id="stageHomeName"></b><span id="stageHomePrice"></span></figcaption>
+          </figure>
+          <figure class="stage-card kid">
+            <div class="art-stack" id="stageKid"><div class="layer base"></div><div class="layer wipe"></div></div>
+            <figcaption><b id="stageKidName"></b><span id="stageKidPrice"></span></figcaption>
+          </figure>
+          <div class="stage-total">
+            <p id="stageCount"></p>
+            <button class="btn btn-small btn-primary" type="button" id="stageShop">Shop Fern</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="new">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>New this season</h2>
+          <button class="btn btn-small" type="button" data-nav="all">See all pieces</button>
+        </div>
+        <div class="grid" id="newGrid"></div>
+      </div>
+    </section>
+
+    <section class="section how" id="how">
+      <div class="wrap how-grid">
+        <figure class="ph how-photo"><img data-speed=".05" src="img/family.webp" alt="A father holds his toddler, dressed in a sage-green romper, close to his face" width="1000" height="1250" loading="lazy"></figure>
+        <div class="how-body">
+        <div class="section-head"><h2>From sign-up to your door</h2></div>
+        <ol class="steps">
+          <li><b>Create an account</b><p>Sign up with your mobile number and a one-time code.</p></li>
+          <li><b>Find what you need</b><p>Search, or browse by age, room or print.</p></li>
+          <li><b>Add delivery details</b><p>Enter your PIN code and we fill in the city and state.</p></li>
+          <li><b>Track your order</b><p>Most orders arrive in 3 to 5 days.</p></li>
+        </ol>
+        <div class="steps-cta">
+          <button class="btn btn-primary" type="button" data-open-auth>Try it now</button>
+          <span class="muted">Takes under a minute with the demo details.</span>
+        </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SHOP -->
+  <div id="view-shop" class="view" hidden>
+    <div class="wrap shop">
+      <div class="shop-head">
+        <h1 id="shopTitle">All pieces</h1>
+        <p class="muted" id="shopCount"></p>
+      </div>
+      <div class="shop-tools">
+        <label class="field-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <span class="sr">Search products</span>
+          <input id="shopQ" type="search" placeholder="Search by name, print or room" autocomplete="off">
+        </label>
+        <label class="sr" for="sortSel">Sort</label>
+        <select class="select" id="sortSel">
+          <option value="featured">Featured</option>
+          <option value="low">Price, low to high</option>
+          <option value="high">Price, high to low</option>
+        </select>
+      </div>
+      <div class="filter-block">
+        <span class="filter-label" id="catLabel">Category</span>
+        <div class="chip-row" id="catChips" role="group" aria-labelledby="catLabel"></div>
+      </div>
+      <div class="filter-block">
+        <span class="filter-label" id="printLabel">Print</span>
+        <div class="chip-row" id="printChips" role="group" aria-labelledby="printLabel"></div>
+      </div>
+      <div class="grid" id="shopGrid"></div>
+      <div class="empty" id="shopEmpty" hidden>
+        <h3>Nothing matches that yet</h3>
+        <p class="muted">Try a print name like Fern, or a piece like curtain or romper.</p>
+        <button class="btn btn-small" type="button" id="clearFilters">Clear filters</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT -->
+  <div id="view-checkout" class="view" hidden>
+    <div class="wrap checkout">
+      <h1>Checkout</h1>
+      <div class="co-grid">
+        <form class="co-form" id="coForm" novalidate>
+          <section class="co-block" aria-labelledby="addrH">
+            <div class="co-block-head">
+              <h2 id="addrH">Delivery address</h2>
+              <button class="link-btn" type="button" id="demoAddr">Use demo address</button>
+            </div>
+            <div class="row-2">
+              <div class="field"><label for="coName">Full name</label><input class="input" id="coName" autocomplete="name"><span class="err" id="coNameErr" hidden></span></div>
+              <div class="field"><label for="coMobile">Mobile number</label><div class="prefix" id="coMobileWrap"><span>+91</span><input class="input" id="coMobile" inputmode="numeric" maxlength="10" autocomplete="tel-national"></div><span class="err" id="coMobileErr" hidden></span></div>
+            </div>
+            <div class="field"><label for="coHouse">Flat, house or building</label><input class="input" id="coHouse" autocomplete="address-line1"><span class="err" id="coHouseErr" hidden></span></div>
+            <div class="field"><label for="coArea">Street, area or locality</label><input class="input" id="coArea" autocomplete="address-line2"><span class="err" id="coAreaErr" hidden></span></div>
+            <div class="field"><label for="coLandmark">Landmark <small>(optional)</small></label><input class="input" id="coLandmark"></div>
+            <div class="row-2">
+              <div class="field"><label for="coPin">PIN code</label><input class="input" id="coPin" inputmode="numeric" maxlength="6" autocomplete="postal-code"><span class="hint" id="coPinHint">We'll fill in your city and state.</span><span class="err" id="coPinErr" hidden></span></div>
+              <div class="field"><label for="coCity">City</label><input class="input" id="coCity" autocomplete="address-level2"><span class="err" id="coCityErr" hidden></span></div>
+            </div>
+            <div class="field"><label for="coState">State</label><select class="input select" id="coState" autocomplete="address-level1"></select><span class="err" id="coStateErr" hidden></span></div>
+          </section>
+
+          <section class="co-block" aria-labelledby="shipH">
+            <h2 id="shipH">Delivery speed</h2>
+            <div class="opt-list">
+              <label class="opt"><input type="radio" name="ship" value="standard" checked><span><b>Standard</b><small id="stdNote">3 to 5 days</small></span><span class="price" id="stdPrice">Free</span></label>
+              <label class="opt"><input type="radio" name="ship" value="express"><span><b>Express</b><small>Next day in metro cities</small></span><span class="price">+ ₹149</span></label>
+            </div>
+          </section>
+
+          <section class="co-block" aria-labelledby="payH">
+            <h2 id="payH">Payment</h2>
+            <div class="opt-list">
+              <label class="opt"><input type="radio" name="pay" value="UPI" checked><span><b>UPI</b><small>Pay with any UPI app on delivery confirmation</small></span><span></span></label>
+              <label class="opt"><input type="radio" name="pay" value="Cash on delivery"><span><b>Cash on delivery</b><small>Pay when it arrives</small></span><span></span></label>
+              <label class="opt"><input type="radio" name="pay" value="Card"><span><b>Card</b><small>Debit or credit card</small></span><span></span></label>
+            </div>
+            <p class="notice">This is a demo store. No payment is taken and nothing will be shipped.</p>
+          </section>
+        </form>
+
+        <aside class="co-summary" aria-labelledby="sumH">
+          <h2 id="sumH">Your order</h2>
+          <ul class="co-items" id="coItems"></ul>
+          <div class="divider"></div>
+          <div class="sum-row"><span>Subtotal</span><span id="coSub"></span></div>
+          <div class="sum-row"><span>Delivery</span><span id="coShip"></span></div>
+          <div class="divider"></div>
+          <div class="sum-row total"><span>Total</span><span id="coTotal"></span></div>
+          <p class="hint">Prices include GST.</p>
+          <button class="btn btn-primary btn-block" type="submit" form="coForm" id="placeBtn">Place order</button>
+          <span class="err" id="coFormErr" hidden></span>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER PLACED -->
+  <div id="view-order" class="view" hidden>
+    <div class="wrap">
+      <div class="order" id="orderBox">
+        <svg class="order-mark" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="42"/><path pathLength="1" d="M26 43l11 11 21-24"/></svg>
+        <div style="display:grid;gap:12px">
+          <h1 id="orderTitle">Order placed</h1>
+          <p class="lede" id="orderLede"></p>
+        </div>
+        <div class="order-meta">
+          <div><small>Order number</small><b id="oId"></b></div>
+          <div><small>Arrives by</small><b id="oDate"></b></div>
+          <div><small>Payment</small><b id="oPay"></b></div>
+        </div>
+        <ol class="track" aria-label="Order progress">
+          <li class="done">Placed</li><li>Packed</li><li>Shipped</li><li>Delivered</li>
+        </ol>
+        <div class="co-block">
+          <div class="co-block-head"><h2>Delivering to</h2></div>
+          <p id="oAddr"></p>
+          <div class="divider"></div>
+          <ul class="co-items" id="oItems"></ul>
+          <div class="divider"></div>
+          <div class="sum-row total"><span>Total</span><span id="oTotal"></span></div>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#shop">Continue shopping</a>
+          <a class="btn" href="#home">Back to home</a>
+        </div>
+        <p class="notice">Demo order. Nothing will be charged or shipped.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div style="display:grid;gap:12px;align-content:start">
+        <span class="brand-word">Nestling</span>
+        <p class="muted" style="max-width:26em">Kidswear and home textiles cut from matching prints. Washed soft, made to be used every day.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><button type="button" data-nav="g-kids">Kids wear</button></li>
+          <li><button type="button" data-nav="g-home">Home</button></li>
+          <li><button type="button" data-nav="prints">Prints</button></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li>Free delivery over ₹1,999</li>
+          <li>15-day returns</li>
+          <li>Size guide by age</li>
+        </ul>
+      </div>
+    </div>
+    <p class="demo-note">Concept demo for a pitch. Nestling is a fictional brand. No real accounts, orders or payments.</p>
+  </div>
+</footer>
+
+<!-- Overlays -->
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="productDrawer" role="dialog" aria-modal="true" aria-labelledby="pdName" inert>
+  <div class="drawer-top">
+    <span class="drawer-kicker" id="pdCat"></span>
+    <button class="icon-btn" type="button" data-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-scroll">
+    <div class="pd-plate" id="pdPlate"></div>
+    <h2 id="pdName"></h2>
+    <p class="pd-price"><strong id="pdPrice"></strong><span class="muted">Price includes GST</span></p>
+    <p class="pd-print" id="pdPrint"></p>
+    <p id="pdDesc"></p>
+    <fieldset>
+      <legend id="pdSizeLabel">Age</legend>
+      <div class="seg" id="pdSizes"></div>
+    </fieldset>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="font-size:14px;font-weight:600">Quantity</span>
+      <div class="stepper" id="pdQty">
+        <button type="button" data-q="-1" aria-label="Decrease quantity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+        <output id="pdQtyVal">1</output>
+        <button type="button" data-q="1" aria-label="Increase quantity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+    </div>
+    <p class="pd-note">Free delivery on orders over ₹1,999. Most PIN codes receive orders in 3 to 5 days.</p>
+    <div class="matches" id="pdMatchesWrap">
+      <h3>Matches with</h3>
+      <div class="match-row" id="pdMatches"></div>
+    </div>
+  </div>
+  <div class="drawer-foot">
+    <button class="btn btn-primary btn-block" type="button" id="pdAdd">Add to bag</button>
+  </div>
+</aside>
+
+<aside class="drawer" id="bagDrawer" role="dialog" aria-modal="true" aria-labelledby="bagH" inert>
+  <div class="drawer-top">
+    <h2 id="bagH">Your bag</h2>
+    <button class="icon-btn" type="button" data-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-scroll">
+    <div class="free-meter" id="freeMeter"><span id="freeText"></span><div class="meter"><i id="freeBar"></i></div></div>
+    <ul class="bag-list" id="bagList"></ul>
+    <div class="empty" id="bagEmpty" hidden>
+      <h3>Your bag is empty</h3>
+      <p class="muted">Start with a print you like.</p>
+      <button class="btn btn-small btn-primary" type="button" data-nav="all">Shop the prints</button>
+    </div>
+  </div>
+  <div class="drawer-foot" id="bagFoot">
+    <div class="sum-row total"><span>Subtotal</span><span id="bagSub"></span></div>
+    <button class="btn btn-primary btn-block" type="button" id="toCheckout">Checkout</button>
+  </div>
+</aside>
+
+<div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authH" inert>
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><h2 id="authH">Create your account</h2><p id="authSub">Sign up with your mobile number. We'll send a one-time code.</p></div>
+      <button class="icon-btn" type="button" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+
+    <form class="form" id="authStep1" novalidate>
+      <div class="field"><label for="auName">Your name</label><input class="input" id="auName" autocomplete="name"><span class="err" id="auNameErr" hidden></span></div>
+      <div class="field"><label for="auMobile">Mobile number</label><div class="prefix" id="auMobileWrap"><span>+91</span><input class="input" id="auMobile" inputmode="numeric" maxlength="10" autocomplete="tel-national"></div><span class="err" id="auMobileErr" hidden></span></div>
+      <div class="field"><label for="auEmail">Email <small>(optional, for receipts)</small></label><input class="input" id="auEmail" type="email" autocomplete="email"><span class="err" id="auEmailErr" hidden></span></div>
+      <button class="btn btn-primary btn-block" type="submit">Send code</button>
+      <button class="link-btn" type="button" id="auDemo" style="justify-self:center">Fill in demo details</button>
+    </form>
+
+    <form class="form" id="authStep2" novalidate hidden>
+      <p class="demo-code">Demo: no SMS is sent. Your code is <b>2468</b>.</p>
+      <div class="field"><label for="auCode">4-digit code</label><input class="input otp" id="auCode" inputmode="numeric" maxlength="4" autocomplete="one-time-code"><span class="err" id="auCodeErr" hidden></span></div>
+      <button class="btn btn-primary btn-block" type="submit">Verify and continue</button>
+      <button class="link-btn" type="button" id="auBack" style="justify-self:center">Change number</button>
+    </form>
+
+    <div class="form" id="authAccount" hidden>
+      <div class="co-block" style="padding:18px">
+        <b id="acName"></b>
+        <span class="muted" id="acMobile"></span>
+      </div>
+      <button class="btn btn-block" type="button" id="signOut">Sign out</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="cottonFx" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="vendor/gsap.min.js"></script>
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const fmt = n => '₹' + n.toLocaleString('en-IN');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('nestling:' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('nestling:' + k, JSON.stringify(v)); } catch (e) {} }
+};
+
+/* ---------- Data ---------- */
+const PRINTS = {
+  fern:   { name: 'Fern',         note: 'Sage sprigs on oat. Our first print.', tint: 'var(--t-sage)' },
+  cloud:  { name: 'Little Cloud', note: 'Powder-blue clouds for nap time.',      tint: 'var(--t-powder)' },
+  dot:    { name: 'Honey Dot',    note: 'Small honey dots on cream.',            tint: 'var(--t-honey)' },
+  stripe: { name: 'Mist Stripe',  note: 'A quiet blue ticking stripe.',          tint: 'var(--t-powder)' },
+  linen:  { name: 'Oat Linen',    note: 'Undyed and unprinted.',                 tint: 'var(--t-oat)' }
+};
+const CATS = {
+  babies:   { name: 'Babies',              group: 'kids', sub: '0 to 2 years' },
+  kids:     { name: 'Kids',                group: 'kids', sub: '2 to 8 years' },
+  sleep:    { name: 'Sleepwear',           group: 'kids', sub: 'Pajamas and sleep sacks' },
+  curtains: { name: 'Curtains',            group: 'home', sub: 'Window and door sizes' },
+  bedding:  { name: 'Bedding',             group: 'home', sub: 'Cot, single and double' },
+  cushions: { name: 'Cushions and throws', group: 'home', sub: '' },
+  rugs:     { name: 'Rugs',                group: 'home', sub: '' }
+};
+const AGE_KID = ['2–3 y', '3–4 y', '4–6 y', '6–8 y'];
+const AGE_BABY = ['0–3 m', '3–6 m', '6–12 m', '12–24 m'];
+const CURTAIN = ['5 ft window', '7 ft door', '9 ft long door'];
+const PRODUCTS = [
+  { id: 'p1',  name: 'Fern Pajama Set',          cat: 'sleep',    print: 'fern',   shape: 'pajama',    price: 1290, sizeLabel: 'Age',    sizes: AGE_KID, tag: 'New', desc: 'Washed cotton muslin in two soft layers. Elastic waist and coconut-shell buttons.', words: 'pyjama nightwear night suit' },
+  { id: 'p2',  name: 'Little Cloud Romper',      cat: 'babies',   print: 'cloud',  shape: 'romper',    price: 990,  sizeLabel: 'Age',    sizes: AGE_BABY, desc: 'Stretchy cotton jersey with poppers along the legs for quick changes.', words: 'onesie bodysuit baby' },
+  { id: 'p3',  name: 'Honey Dot Sundress',       cat: 'kids',     print: 'dot',    shape: 'dress',     price: 1190, sizeLabel: 'Age',    sizes: AGE_KID, desc: 'Breezy cotton poplin with a gathered waist and buttons down the back.', words: 'frock girls summer' },
+  { id: 'p4',  name: 'Mist Stripe Kurta Set',    cat: 'kids',     print: 'stripe', shape: 'kurta',     price: 1490, sizeLabel: 'Age',    sizes: AGE_KID, tag: 'New', desc: 'Handloom cotton kurta with a mandarin collar and a matching pyjama.', words: 'ethnic festive boys pyjama' },
+  { id: 'p5',  name: 'Fern Muslin Swaddle',      cat: 'babies',   print: 'fern',   shape: 'swaddle',   price: 690,  sizeLabel: 'Size',   sizes: ['120 × 120 cm'], desc: 'Four layers of muslin that get softer with every wash.', words: 'blanket wrap newborn' },
+  { id: 'p6',  name: 'Little Cloud Sleep Sack',  cat: 'sleep',    print: 'cloud',  shape: 'sleepsack', price: 1350, sizeLabel: 'Age',    sizes: ['0–6 m', '6–18 m', '18–36 m'], desc: 'Lightly quilted cotton with a two-way zip for night feeds.', words: 'sleeping bag baby' },
+  { id: 'p7',  name: 'Oat Linen Play Tee',       cat: 'kids',     print: 'linen',  shape: 'tee',       price: 790,  sizeLabel: 'Age',    sizes: AGE_KID, desc: 'Garment-dyed linen blend that does not mind grass stains.', words: 't-shirt top' },
+  { id: 'p8',  name: 'Fern Sheer Curtain',       cat: 'curtains', print: 'fern',   shape: 'curtain',   price: 2490, sizeLabel: 'Height', sizes: CURTAIN, tag: 'Bestseller', desc: 'Light-filtering cotton voile with a rod pocket and back tabs. Sold per panel, 4.5 ft wide.', words: 'sheer window drape' },
+  { id: 'p9',  name: 'Little Cloud Blackout Curtain', cat: 'curtains', print: 'cloud', shape: 'curtain', price: 2890, sizeLabel: 'Height', sizes: CURTAIN, desc: 'Blocks most daylight for afternoon naps. Cotton face with a thermal lining.', words: 'blackout nursery drape' },
+  { id: 'p10', name: 'Mist Stripe Linen Curtain', cat: 'curtains', print: 'stripe', shape: 'curtain',  price: 2690, sizeLabel: 'Height', sizes: CURTAIN, desc: 'Washed linen that falls in relaxed folds. Sold per panel.', words: 'linen drape' },
+  { id: 'p16', name: 'Honey Dot Cafe Curtain',   cat: 'curtains', print: 'dot',    shape: 'curtain',   price: 1590, sizeLabel: 'Height', sizes: ['3 ft half window', '4 ft half window'], desc: 'A half-height curtain for nursery windows. Light comes in over the top.', words: 'short window' },
+  { id: 'p11', name: 'Honey Dot Cot Quilt',      cat: 'bedding',  print: 'dot',    shape: 'quilt',     price: 2190, sizeLabel: 'Size',   sizes: ['Cot 100 × 120 cm', 'Single 150 × 220 cm'], tag: 'New', desc: 'Hand-quilted cotton filled with soft cotton wadding.', words: 'razai blanket crib' },
+  { id: 'p12', name: 'Fern Bedsheet Set',        cat: 'bedding',  print: 'fern',   shape: 'sheet',     price: 1890, sizeLabel: 'Size',   sizes: ['Single', 'Double', 'King'], desc: 'Percale sheet with two pillow covers. Crisp, cool and breathable.', words: 'bed sheet pillow' },
+  { id: 'p13', name: 'Little Cloud Cushion Cover', cat: 'cushions', print: 'cloud', shape: 'cushion',  price: 590,  sizeLabel: 'Size',   sizes: ['16 × 16 in', '18 × 18 in'], desc: 'Cotton cover with a hidden zip. Insert sold separately.', words: 'pillow' },
+  { id: 'p14', name: 'Mist Stripe Throw',        cat: 'cushions', print: 'stripe', shape: 'throw',     price: 1690, sizeLabel: 'Size',   sizes: ['130 × 170 cm'], desc: 'Woven cotton throw with a hand-knotted fringe.', words: 'blanket sofa' },
+  { id: 'p15', name: 'Oat Round Rug',            cat: 'rugs',     print: 'linen',  shape: 'rug',       price: 3490, sizeLabel: 'Size',   sizes: ['3 ft round', '4 ft round', '5 ft round'], desc: 'Braided cotton, soft enough for floor time. Machine washable.', words: 'mat carpet floor' }
+];
+const byId = id => PRODUCTS.find(p => p.id === id);
+
+/* ---------- Illustrations ---------- */
+const HANGER = '<g fill="none" stroke="#22343A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".7"><path d="M120 50v-7c0-8 12-9 12-1 0 4-4 5-6 7"/><path d="M76 66l44-16 44 16"/></g>';
+const OUT = 'fill="none" stroke="rgba(34,52,58,.24)" stroke-width="1.4" stroke-linejoin="round"';
+const DASH = 'fill="none" stroke="rgba(34,52,58,.30)" stroke-width="1.2" stroke-dasharray="3 3"';
+const fabric = (d, p) => `<path d="${d}" fill="url(#p-${p})"/><path d="${d}" fill="url(#g-shade)"/><path d="${d}" ${OUT}/>`;
+const btn = (x, y) => `<circle cx="${x}" cy="${y}" r="2.6" fill="#FBF8F2" stroke="rgba(34,52,58,.3)"/>`;
+const SHAPES = {
+  pajama: p => HANGER +
+    fabric('M86 158L154 158L162 248L131 250L120 192L109 250L78 248Z', p) +
+    fabric('M84 62L120 52L156 62L190 92L174 112L160 103L160 170L80 170L80 103L66 112L50 92Z', p) +
+    `<path d="M106 57L120 74L134 57" ${OUT}/><path d="M120 74V166" ${DASH}/>${btn(120,90)}${btn(120,110)}${btn(120,130)}${btn(120,150)}<path d="M134 122h16v14h-16z" ${OUT}/>`,
+  romper: p => HANGER +
+    fabric('M94 64L120 56L146 64L174 86L162 104L153 98L156 170Q157 200 141 214L134 240L106 240L99 214Q83 200 84 170L87 98L78 104L66 86Z', p) +
+    `<path d="M106 60Q120 76 134 60" ${OUT}/>${btn(112,232)}${btn(120,232)}${btn(128,232)}<path d="M90 166Q120 176 150 166" ${DASH}/>`,
+  dress: p => HANGER +
+    fabric('M97 62L120 56L143 62L162 74L152 98L146 94L147 120L184 238Q120 252 56 238L93 120L94 94L88 98L78 74Z', p) +
+    `<path d="M106 60Q120 72 134 60" ${OUT}/><path d="M93 120Q120 127 147 120" ${OUT}/><path d="M62 230Q120 243 178 230" ${DASH}/>`,
+  kurta: p => HANGER +
+    fabric('M88 64L111 56L129 56L152 64L184 96L170 116L158 107L162 238L78 238L82 107L70 116L56 96Z', p) +
+    `<path d="M111 56V64H129V56" ${OUT}/><path d="M120 64V112" ${OUT}/>${btn(120,76)}${btn(120,90)}${btn(120,104)}<path d="M81 230H159" ${DASH}/>`,
+  tee: p => HANGER +
+    fabric('M86 64L120 55L154 64L188 88L174 110L160 102L160 198L80 198L80 102L66 110L52 88Z', p) +
+    `<path d="M104 59Q120 74 136 59" ${OUT}/><path d="M82 190H158" ${DASH}/>`,
+  sleepsack: p => HANGER +
+    fabric('M92 62L104 60Q120 76 136 60L148 62Q162 66 161 86L158 104Q150 108 150 118L156 212Q156 246 120 248Q84 246 84 212L90 118Q90 108 82 104L79 86Q78 66 92 62Z', p) +
+    `<path d="M124 78V238" ${DASH}/><rect x="120" y="74" width="8" height="12" rx="2" fill="#FBF8F2" stroke="rgba(34,52,58,.3)"/>`,
+  swaddle: p => `<ellipse cx="120" cy="236" rx="74" ry="9" fill="rgba(34,52,58,.08)"/>` +
+    fabric('M120 66L198 146L120 226L42 146Z', p) +
+    `<path d="M120 66L160 106L120 146L80 106Z" fill="url(#p-${p})"/><path d="M120 66L160 106L120 146L80 106Z" fill="rgba(34,52,58,.08)"/><path d="M120 66L160 106L120 146L80 106Z" ${OUT}/><path d="M120 78L186 146L120 214L54 146Z" ${DASH}/>`,
+  curtain: p => `<path d="M34 54H206" stroke="#22343A" stroke-width="4" stroke-linecap="round" opacity=".75"/><circle cx="31" cy="54" r="6" fill="#D9A85B"/><circle cx="209" cy="54" r="6" fill="#D9A85B"/>` +
+    [56,74,92,110,128,146,164,182].map(x => `<circle cx="${x}" cy="58" r="4" fill="none" stroke="#22343A" stroke-width="1.6" opacity=".55"/>`).join('') +
+    fabric('M50 60L190 60L192 248Q174 256 156 248Q138 256 120 248Q102 256 84 248Q66 256 48 248Z', p) +
+    `<path d="M50 60L190 60L192 248Q174 256 156 248Q138 256 120 248Q102 256 84 248Q66 256 48 248Z" fill="url(#g-folds)"/><path d="M52 238Q120 244 190 238" ${DASH}/>`,
+  quilt: p => `<ellipse cx="120" cy="244" rx="86" ry="9" fill="rgba(34,52,58,.08)"/>` +
+    fabric('M44 118Q44 106 56 106L184 106Q196 106 196 118L196 222Q196 234 184 234L56 234Q44 234 44 222Z', p) +
+    `<path d="M44 118Q44 106 56 106L184 106Q196 106 196 118L196 222Q196 234 184 234L56 234Q44 234 44 222Z" fill="none" stroke="#6F8C7E" stroke-width="5"/><path d="M58 120H182V220H58Z" ${DASH}/><path d="M46 156H194M46 190H194" stroke="rgba(34,52,58,.14)" stroke-width="2"/>`,
+  sheet: p => `<ellipse cx="118" cy="246" rx="86" ry="9" fill="rgba(34,52,58,.08)"/>` +
+    fabric('M62 92H190Q198 92 198 100V196Q198 204 190 204H62Q54 204 54 196V100Q54 92 62 92Z', p) +
+    fabric('M48 126H176Q184 126 184 134V230Q184 238 176 238H48Q40 238 40 230V134Q40 126 48 126Z', p) +
+    `<rect x="98" y="126" width="28" height="112" fill="#FBF8F2" opacity=".92"/><path d="M104 170h16M104 178h10" stroke="rgba(34,52,58,.3)" stroke-width="2" stroke-linecap="round"/>`,
+  cushion: p => `<ellipse cx="120" cy="238" rx="72" ry="9" fill="rgba(34,52,58,.08)"/>` +
+    fabric('M58 98Q120 84 182 98Q196 160 182 222Q120 236 58 222Q44 160 58 98Z', p) +
+    `<path d="M58 98Q120 84 182 98Q196 160 182 222Q120 236 58 222Q44 160 58 98Z" fill="none" stroke="#6F8C7E" stroke-width="3" opacity=".7"/>`,
+  throw: p => `<ellipse cx="120" cy="244" rx="78" ry="8" fill="rgba(34,52,58,.08)"/>` +
+    fabric('M62 82H178Q186 82 186 90V214H54V90Q54 82 62 82Z', p) +
+    `<path d="M54 150H186" stroke="rgba(34,52,58,.16)" stroke-width="2"/>` +
+    Array.from({ length: 22 }, (_, i) => `<path d="M${57 + i * 6} 214v14" stroke="rgba(34,52,58,.38)" stroke-width="1.6" stroke-linecap="round"/>`).join(''),
+  rug: p => `<ellipse cx="120" cy="184" rx="100" ry="58" fill="rgba(34,52,58,.08)"/><ellipse cx="120" cy="176" rx="98" ry="56" fill="url(#p-${p})"/><ellipse cx="120" cy="176" rx="98" ry="56" ${OUT}/>` +
+    `<ellipse cx="120" cy="176" rx="78" ry="44" fill="none" stroke="#8FA89A" stroke-width="7"/><ellipse cx="120" cy="176" rx="58" ry="32" fill="none" stroke="#D9A85B" stroke-width="4"/><ellipse cx="120" cy="176" rx="36" ry="19" fill="none" stroke="#6F8C7E" stroke-width="3"/>`
+};
+const art = (shape, print, label = '') =>
+  `<svg viewBox="0 0 240 280" ${label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"'}>${SHAPES[shape](print)}</svg>`;
+const swatch = p => `<svg class="sw" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="url(#p-${p})" stroke="rgba(34,52,58,.25)"/></svg>`;
+const plate = (p, extra = '') => `<span class="plate" style="--tint:${PRINTS[p.print].tint}">${art(p.shape, p.print)}${extra}</span>`;
+
+/* ---------- State ---------- */
+const state = {
+  bag: store.get('bag', []),
+  user: store.get('user', null),
+  cat: 'all', print: 'all', q: '', sort: 'featured',
+  current: null, qty: 1,
+  pendingCheckout: false,
+  order: store.get('order', null),
+  stagePrint: 'fern'
+};
+const saveBag = () => store.set('bag', state.bag);
+
+/* ---------- Toast ---------- */
+let toastT;
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+/* ---------- Overlays ---------- */
+let openEl = null, lastFocus = null;
+function openOverlay(el) {
+  if (openEl && openEl !== el) closeOverlay(true);
+  lastFocus = document.activeElement;
+  el.inert = false; el.classList.add('open'); $('#scrim').classList.add('open');
+  document.body.classList.add('locked'); openEl = el;
+  setTimeout(() => { const f = el.querySelector('input:not([hidden]), [data-close]'); f && f.focus({ preventScroll: true }); }, 60);
+}
+function closeOverlay(swap) {
+  if (!openEl) return;
+  openEl.classList.remove('open'); openEl.inert = true; openEl = null;
+  if (!swap) { $('#scrim').classList.remove('open'); document.body.classList.remove('locked'); lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true }); }
+}
+$('#scrim').addEventListener('click', () => closeOverlay());
+$('#authModal').addEventListener('click', e => { if (e.target.id === 'authModal') closeOverlay(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
+
+/* ---------- Header ---------- */
+function renderHeader() {
+  const n = state.bag.reduce((s, i) => s + i.qty, 0);
+  const c = $('#bagCount'); c.hidden = n === 0; c.textContent = n;
+  $('#bagBtn').setAttribute('aria-label', `Bag, ${n} item${n === 1 ? '' : 's'}`);
+  const a = $('#accountBtn');
+  if (state.user) { a.innerHTML = `<span class="avatar">${state.user.name.trim()[0].toUpperCase()}</span>`; a.setAttribute('aria-label', 'Account, ' + state.user.name); }
+  else { a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'; a.setAttribute('aria-label', 'Sign in'); }
+}
+function bumpBag() { const c = $('#bagCount'); c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); }
+
+/* ---------- Home ---------- */
+function renderHome() {
+  const row = k => { const n = PRODUCTS.filter(p => p.cat === k).length; return `<li><button type="button" data-cat="${k}">${CATS[k].name}<span>${n} piece${n === 1 ? '' : 's'}</span></button></li>`; };
+  $('#catListKids').innerHTML = ['babies', 'kids', 'sleep'].map(row).join('');
+  $('#catListHome').innerHTML = ['curtains', 'bedding', 'cushions', 'rugs'].map(row).join('');
+  $('#newGrid').innerHTML = ['p1', 'p8', 'p4', 'p11'].map(id => card(byId(id))).join('');
+  $('#printList').innerHTML = ['fern', 'cloud', 'dot', 'stripe'].map(k =>
+    `<button class="print-opt" type="button" role="radio" aria-checked="${k === state.stagePrint}" data-stage="${k}"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="url(#p-${k})" stroke="rgba(34,52,58,.22)"/></svg><span><b>${PRINTS[k].name}</b><small>${PRINTS[k].note}</small></span></button>`).join('');
+  setStage(state.stagePrint, true);
+}
+const STAGE = { fern: ['p8', 'p1'], cloud: ['p9', 'p2'], dot: ['p16', 'p3'], stripe: ['p10', 'p4'] };
+function setStage(k, instant) {
+  state.stagePrint = k;
+  const [h, kid] = STAGE[k].map(byId);
+  $$('.print-opt').forEach(b => b.setAttribute('aria-checked', b.dataset.stage === k));
+  const swap = (box, p) => {
+    const base = $('.base', box), wipe = $('.wipe', box), html = art(p.shape, p.print, p.name);
+    if (instant || reduceMotion) { base.innerHTML = html; wipe.innerHTML = ''; return; }
+    wipe.classList.remove('go'); wipe.innerHTML = html; void wipe.offsetWidth; wipe.classList.add('go');
+    clearTimeout(box._t); box._t = setTimeout(() => { base.innerHTML = html; wipe.classList.remove('go'); wipe.innerHTML = ''; }, 820);
+  };
+  swap($('#stageHome'), h); swap($('#stageKid'), kid);
+  $('#stageKid').style.background = PRINTS[k].tint;
+  $('#stageHomeName').textContent = h.name; $('#stageHomePrice').textContent = fmt(h.price);
+  $('#stageKidName').textContent = kid.name; $('#stageKidPrice').textContent = fmt(kid.price);
+  const all = PRODUCTS.filter(p => p.print === k);
+  $('#stageCount').textContent = `${all.length} pieces in ${PRINTS[k].name}, from ${fmt(Math.min(...all.map(p => p.price)))}`;
+  $('#stageShop').textContent = 'Shop ' + PRINTS[k].name;
+}
+
+/* ---------- Cards and shop ---------- */
+function card(p) {
+  return `<button class="card" type="button" data-pid="${p.id}" aria-label="${p.name}, ${fmt(p.price)}">
+    ${plate(p, p.tag ? `<span class="tag">${p.tag}</span>` : '')}
+    <span class="card-body"><span class="card-name">${p.name}</span><span class="card-meta">${swatch(p.print)}${PRINTS[p.print].name}</span><span class="card-price">${fmt(p.price)}</span></span>
+  </button>`;
+}
+const CAT_CHIPS = [['all', 'All'], ['g-kids', 'Kids wear'], ['babies', 'Babies'], ['kids', 'Kids'], ['sleep', 'Sleepwear'], ['sep'], ['g-home', 'Home'], ['curtains', 'Curtains'], ['bedding', 'Bedding'], ['cushions', 'Cushions and throws'], ['rugs', 'Rugs']];
+function renderShop() {
+  $('#catChips').innerHTML = CAT_CHIPS.map(([k, l]) => k === 'sep' ? '<span class="chip-sep" aria-hidden="true"></span>' : `<button class="chip" type="button" data-chip-cat="${k}" aria-pressed="${state.cat === k}">${l}</button>`).join('');
+  $('#printChips').innerHTML = `<button class="chip" type="button" data-chip-print="all" aria-pressed="${state.print === 'all'}">All prints</button>` +
+    Object.keys(PRINTS).map(k => `<button class="chip" type="button" data-chip-print="${k}" aria-pressed="${state.print === k}">${swatch(k)}${PRINTS[k].name}</button>`).join('');
+  const q = state.q.trim().toLowerCase();
+  let list = PRODUCTS.filter(p => {
+    if (state.cat !== 'all') { if (state.cat.startsWith('g-')) { if (CATS[p.cat].group !== state.cat.slice(2)) return false; } else if (p.cat !== state.cat) return false; }
+    if (state.print !== 'all' && p.print !== state.print) return false;
+    if (q) { const hay = `${p.name} ${PRINTS[p.print].name} ${CATS[p.cat].name} ${CATS[p.cat].group === 'kids' ? 'kids wear clothes' : 'home'} ${p.words}`.toLowerCase(); return q.split(/\s+/).every(w => hay.includes(w)); }
+    return true;
+  });
+  if (state.sort === 'low') list = [...list].sort((a, b) => a.price - b.price);
+  if (state.sort === 'high') list = [...list].sort((a, b) => b.price - a.price);
+  const title = state.cat === 'all' ? 'All pieces' : state.cat === 'g-kids' ? 'Kids wear' : state.cat === 'g-home' ? 'Home' : CATS[state.cat].name;
+  $('#shopTitle').textContent = state.print !== 'all' && state.cat === 'all' ? PRINTS[state.print].name : title;
+  $('#shopCount').textContent = `${list.length} piece${list.length === 1 ? '' : 's'}${q ? ` for “${state.q.trim()}”` : ''}`;
+  $('#shopGrid').innerHTML = list.map(card).join('');
+  $('#shopEmpty').hidden = list.length > 0;
+  if ($('#shopQ').value !== state.q) $('#shopQ').value = state.q;
+  $('#sortSel').value = state.sort;
+}
+function goShop(opts = {}) {
+  Object.assign(state, { cat: 'all', print: 'all', q: '' }, opts);
+  if (location.hash === '#shop') { renderShop(); scrollTo(0, 0); } else location.hash = 'shop';
+}
+
+/* ---------- Product drawer ---------- */
+function openProduct(id) {
+  const p = byId(id); state.current = p; state.qty = 1;
+  $('#pdCat').textContent = `${CATS[p.cat].group === 'kids' ? 'Kids wear' : 'Home'}, ${CATS[p.cat].name}`;
+  const pl = $('#pdPlate'); pl.style.setProperty('--tint', PRINTS[p.print].tint); pl.innerHTML = art(p.shape, p.print, p.name);
+  $('#pdName').textContent = p.name;
+  $('#pdPrice').textContent = fmt(p.price);
+  $('#pdPrint').innerHTML = `${swatch(p.print)}<span><b>${PRINTS[p.print].name}</b> <span class="muted">${PRINTS[p.print].note}</span></span>`;
+  $('#pdDesc').textContent = p.desc;
+  $('#pdSizeLabel').textContent = p.sizeLabel;
+  $('#pdSizes').innerHTML = p.sizes.map((s, i) => `<label><input type="radio" name="pdSize" value="${s}" ${i === (p.sizes.length > 2 ? 1 : 0) ? 'checked' : ''}><span>${s}</span></label>`).join('');
+  $('#pdQtyVal').textContent = '1';
+  const m = PRODUCTS.filter(x => x.print === p.print && x.id !== p.id).slice(0, 3);
+  $('#pdMatchesWrap').hidden = !m.length;
+  $('#pdMatches').innerHTML = m.map(x => `<button class="match" type="button" data-pid="${x.id}">${plate(x)}<b>${x.name}</b><span class="muted">${fmt(x.price)}</span></button>`).join('');
+  $('#productDrawer .drawer-scroll').scrollTop = 0;
+  if (openEl !== $('#productDrawer')) openOverlay($('#productDrawer'));
+}
+$('#pdQty').addEventListener('click', e => {
+  const b = e.target.closest('[data-q]'); if (!b) return;
+  state.qty = Math.max(1, Math.min(9, state.qty + Number(b.dataset.q))); $('#pdQtyVal').textContent = state.qty;
+});
+$('#pdAdd').addEventListener('click', () => {
+  const p = state.current; const size = ($('input[name="pdSize"]:checked') || {}).value || p.sizes[0];
+  const ex = state.bag.find(i => i.id === p.id && i.size === size);
+  if (ex) ex.qty = Math.min(9, ex.qty + state.qty); else state.bag.push({ id: p.id, size, qty: state.qty });
+  saveBag(); renderHeader(); bumpBag(); closeOverlay();
+  toast(`Added ${p.name} to your bag`);
+});
+
+/* ---------- Bag ---------- */
+const subtotal = () => state.bag.reduce((s, i) => s + byId(i.id).price * i.qty, 0);
+const FREE = 1999;
+function renderBag() {
+  const sub = subtotal(), empty = !state.bag.length;
+  $('#bagEmpty').hidden = !empty; $('#bagFoot').hidden = empty; $('#freeMeter').hidden = empty;
+  $('#bagList').innerHTML = state.bag.map((i, idx) => { const p = byId(i.id); return `<li class="bag-item">${plate(p)}<div><b>${p.name}</b><small>${p.sizeLabel}: ${i.size}</small><small>${PRINTS[p.print].name}</small></div>
+    <div class="right"><span>${fmt(p.price * i.qty)}</span><div class="stepper small" data-idx="${idx}"><button type="button" data-bq="-1" aria-label="Decrease"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg></button><output>${i.qty}</output><button type="button" data-bq="1" aria-label="Increase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div><button class="remove" type="button" data-rm="${idx}">Remove</button></div></li>`; }).join('');
+  $('#bagSub').textContent = fmt(sub);
+  $('#freeText').innerHTML = sub >= FREE ? '<b>Free delivery unlocked.</b>' : `Add <b>${fmt(FREE - sub)}</b> more for free delivery.`;
+  $('#freeBar').style.width = Math.min(100, sub / FREE * 100) + '%';
+}
+$('#bagList').addEventListener('click', e => {
+  const q = e.target.closest('[data-bq]'), rm = e.target.closest('[data-rm]');
+  if (q) { const idx = +q.closest('[data-idx]').dataset.idx; const it = state.bag[idx]; it.qty += +q.dataset.bq; if (it.qty < 1) state.bag.splice(idx, 1); else it.qty = Math.min(9, it.qty); }
+  else if (rm) state.bag.splice(+rm.dataset.rm, 1);
+  else return;
+  saveBag(); renderBag(); renderHeader();
+});
+$('#bagBtn').addEventListener('click', () => { renderBag(); openOverlay($('#bagDrawer')); });
+$('#toCheckout').addEventListener('click', () => {
+  if (!state.user) { state.pendingCheckout = true; openAuth('Sign in to place your order', 'Use your mobile number. It takes a few seconds.'); return; }
+  closeOverlay(); location.hash = 'checkout';
+});
+
+/* ---------- Auth ---------- */
+const mobileOk = v => /^[6-9]\d{9}$/.test(v);
+const spaced = m => `+91 ${m.slice(0, 5)} ${m.slice(5)}`;
+function setErr(id, msg) {
+  const e = $('#' + id + 'Err'), i = $('#' + id); if (e) { e.textContent = msg || ''; e.hidden = !msg; }
+  if (i) i.setAttribute('aria-invalid', msg ? 'true' : 'false');
+  const w = $('#' + id + 'Wrap'); if (w) w.classList.toggle('bad', !!msg);
+  return !msg;
+}
+function openAuth(title, sub) {
+  if (state.user) {
+    $('#authH').textContent = 'Your account'; $('#authSub').textContent = 'Signed in on this device.';
+    $('#authStep1').hidden = true; $('#authStep2').hidden = true; $('#authAccount').hidden = false;
+    $('#acName').textContent = state.user.name; $('#acMobile').textContent = spaced(state.user.mobile);
+  } else {
+    $('#authH').textContent = title || 'Create your account';
+    $('#authSub').textContent = sub || "Sign up with your mobile number. We'll send a one-time code.";
+    $('#authStep1').hidden = false; $('#authStep2').hidden = true; $('#authAccount').hidden = true;
+  }
+  openOverlay($('#authModal'));
+}
+$('#accountBtn').addEventListener('click', () => openAuth());
+$('#auDemo').addEventListener('click', () => { $('#auName').value = 'Aditi Rao'; $('#auMobile').value = '9876543210'; $('#auEmail').value = 'aditi@example.com'; ['auName', 'auMobile', 'auEmail'].forEach(i => setErr(i)); });
+$('#auMobile').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); });
+$('#authStep1').addEventListener('submit', e => {
+  e.preventDefault();
+  const n = $('#auName').value.trim(), m = $('#auMobile').value.trim(), em = $('#auEmail').value.trim();
+  const ok = [setErr('auName', n.length < 2 ? 'Enter your name.' : ''),
+    setErr('auMobile', !mobileOk(m) ? 'Enter a 10-digit mobile number starting with 6, 7, 8 or 9.' : ''),
+    setErr('auEmail', em && !/^\S+@\S+\.\S+$/.test(em) ? 'Enter an email like name@example.com, or leave it blank.' : '')].every(Boolean);
+  if (!ok) return;
+  $('#authH').textContent = 'Enter your code';
+  $('#authSub').textContent = `We sent a 4-digit code to ${spaced(m)}.`;
+  $('#authStep1').hidden = true; $('#authStep2').hidden = false; $('#auCode').value = ''; setErr('auCode');
+  setTimeout(() => $('#auCode').focus(), 50);
+});
+$('#auCode').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); if (e.target.value.length === 4) $('#authStep2').requestSubmit(); });
+$('#auBack').addEventListener('click', () => { $('#authStep2').hidden = true; $('#authStep1').hidden = false; $('#authH').textContent = 'Create your account'; });
+$('#authStep2').addEventListener('submit', e => {
+  e.preventDefault();
+  if ($('#auCode').value !== '2468') { setErr('auCode', "That code doesn't match. Use 2468 for this demo."); return; }
+  state.user = { name: $('#auName').value.trim(), mobile: $('#auMobile').value.trim(), email: $('#auEmail').value.trim() };
+  store.set('user', state.user); renderHeader(); closeOverlay();
+  toast(`Welcome, ${state.user.name.split(' ')[0]}. You're signed in.`);
+  if (state.pendingCheckout) { state.pendingCheckout = false; location.hash = 'checkout'; }
+});
+$('#signOut').addEventListener('click', () => { state.user = null; store.set('user', null); renderHeader(); closeOverlay(); toast('Signed out'); });
+
+/* ---------- Checkout ---------- */
+const STATES = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry'];
+const PINS = { '110': ['New Delhi', 'Delhi'], '122': ['Gurugram', 'Haryana'], '201': ['Noida', 'Uttar Pradesh'], '226': ['Lucknow', 'Uttar Pradesh'], '302': ['Jaipur', 'Rajasthan'], '380': ['Ahmedabad', 'Gujarat'], '400': ['Mumbai', 'Maharashtra'], '411': ['Pune', 'Maharashtra'], '500': ['Hyderabad', 'Telangana'], '530': ['Visakhapatnam', 'Andhra Pradesh'], '560': ['Bengaluru', 'Karnataka'], '600': ['Chennai', 'Tamil Nadu'], '641': ['Coimbatore', 'Tamil Nadu'], '682': ['Kochi', 'Kerala'], '700': ['Kolkata', 'West Bengal'] };
+const METRO = ['New Delhi', 'Gurugram', 'Noida', 'Mumbai', 'Pune', 'Hyderabad', 'Bengaluru', 'Chennai', 'Kolkata'];
+$('#coState').innerHTML = '<option value="">Choose a state</option>' + STATES.map(s => `<option>${s}</option>`).join('');
+const ship = () => ($('input[name="ship"]:checked') || {}).value || 'standard';
+function totals() {
+  const sub = subtotal(), base = sub >= FREE ? 0 : 99, exp = ship() === 'express' ? 149 : 0;
+  return { sub, delivery: base + exp, total: sub + base + exp, base };
+}
+function renderCheckout() {
+  const t = totals();
+  $('#coItems').innerHTML = state.bag.map(i => { const p = byId(i.id); return `<li>${plate(p)}<span><b>${p.name}</b><small>${i.size}, qty ${i.qty}</small></span><span>${fmt(p.price * i.qty)}</span></li>`; }).join('');
+  $('#coSub').textContent = fmt(t.sub);
+  $('#coShip').textContent = t.delivery ? fmt(t.delivery) : 'Free';
+  $('#coTotal').textContent = fmt(t.total);
+  $('#stdPrice').textContent = t.base ? fmt(t.base) : 'Free';
+  $('#placeBtn').textContent = `Place order for ${fmt(t.total)}`;
+  if (state.user) { if (!$('#coName').value) $('#coName').value = state.user.name; if (!$('#coMobile').value) $('#coMobile').value = state.user.mobile; }
+}
+$('#coForm').addEventListener('change', e => { if (e.target.name === 'ship') renderCheckout(); });
+let autoCity = false;
+$('#coPin').addEventListener('input', e => {
+  const v = e.target.value = e.target.value.replace(/\D/g, ''); const hint = $('#coPinHint');
+  setErr('coPin');
+  if (v.length < 6) { hint.className = 'hint'; hint.textContent = "We'll fill in your city and state."; return; }
+  const hit = PINS[v.slice(0, 3)];
+  if (hit) {
+    if (!$('#coCity').value || autoCity) { $('#coCity').value = hit[0]; autoCity = true; setErr('coCity'); }
+    if (!$('#coState').value || autoCity) { $('#coState').value = hit[1]; setErr('coState'); }
+    hint.className = 'hint ok'; hint.textContent = `Delivers to ${hit[0]} in ${METRO.includes(hit[0]) ? '2 to 4' : '3 to 5'} days.`;
+  } else { hint.className = 'hint ok'; hint.textContent = 'We deliver here in 4 to 7 days.'; }
+});
+$('#coCity').addEventListener('input', () => { autoCity = false; });
+$('#coMobile').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); });
+$('#demoAddr').addEventListener('click', () => {
+  const u = state.user || { name: 'Aditi Rao', mobile: '9876543210' };
+  $('#coName').value = u.name; $('#coMobile').value = u.mobile;
+  $('#coHouse').value = 'Flat 4B, Palm Grove Apartments';
+  $('#coArea').value = 'Road No. 12, Banjara Hills';
+  $('#coLandmark').value = 'Near Lotus Pond';
+  $('#coPin').value = '500034'; $('#coCity').value = ''; $('#coState').value = '';
+  $('#coPin').dispatchEvent(new Event('input'));
+  ['coName', 'coMobile', 'coHouse', 'coArea', 'coPin', 'coCity', 'coState'].forEach(i => setErr(i)); $('#coFormErr').hidden = true;
+});
+$('#coForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = id => $('#' + id).value.trim();
+  const checks = [
+    setErr('coName', v('coName').length < 2 ? 'Enter the name of the person receiving the order.' : ''),
+    setErr('coMobile', !mobileOk(v('coMobile')) ? 'Enter a 10-digit mobile number.' : ''),
+    setErr('coHouse', !v('coHouse') ? 'Enter a flat, house or building.' : ''),
+    setErr('coArea', !v('coArea') ? 'Enter a street, area or locality.' : ''),
+    setErr('coPin', !/^[1-9]\d{5}$/.test(v('coPin')) ? 'Enter a 6-digit PIN code.' : ''),
+    setErr('coCity', !v('coCity') ? 'Enter a city.' : ''),
+    setErr('coState', !v('coState') ? 'Choose a state.' : '')
+  ];
+  if (!checks.every(Boolean)) { $('#coFormErr').textContent = 'Some delivery details need a look. Fix the highlighted fields above.'; $('#coFormErr').hidden = false; const bad = $('#coForm [aria-invalid="true"]'); bad && bad.focus(); return; }
+  $('#coFormErr').hidden = true;
+  const t = totals(), d = new Date(); d.setDate(d.getDate() + (ship() === 'express' ? 1 : 4));
+  state.order = {
+    id: 'NST-' + String(100000 + Math.floor(Math.random() * 900000)),
+    date: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' }),
+    pay: ($('input[name="pay"]:checked') || {}).value,
+    name: v('coName'),
+    addr: `${v('coName')}, ${spaced(v('coMobile'))}<br>${v('coHouse')}, ${v('coArea')}${v('coLandmark') ? ', ' + v('coLandmark') : ''}<br>${v('coCity')}, ${v('coState')} ${v('coPin')}`,
+    items: state.bag.map(i => ({ ...i })), total: t.total
+  };
+  store.set('order', state.order);
+  state.bag = []; saveBag(); renderHeader();
+  location.hash = 'order';
+});
+
+/* ---------- Order ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function renderOrder() {
+  const o = state.order; const box = $('#orderBox'); box.classList.remove('on');
+  $('#orderTitle').textContent = `Thank you, ${o.name.split(' ')[0]}.`;
+  $('#orderLede').textContent = "Your order is placed. We'll message you when it's packed and again when it ships.";
+  $('#oId').textContent = o.id; $('#oDate').textContent = o.date; $('#oPay').textContent = o.pay;
+  $('#oAddr').innerHTML = o.addr.split('<br>').map(esc).join('<br>');
+  $('#oItems').innerHTML = o.items.map(i => { const p = byId(i.id); return `<li>${plate(p)}<span><b>${p.name}</b><small>${i.size}, qty ${i.qty}</small></span><span>${fmt(p.price * i.qty)}</span></li>`; }).join('');
+  $('#oTotal').textContent = fmt(o.total);
+  requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('on')));
+}
+
+/* ---------- Routing ---------- */
+const VIEWS = ['home', 'shop', 'checkout', 'order'];
+function route() {
+  let h = location.hash.slice(1) || 'home'; let anchor = null;
+  if (!VIEWS.includes(h)) { anchor = h; h = 'home'; }
+  if (h === 'checkout' && !state.bag.length) { location.replace('#shop'); return; }
+  if (h === 'checkout' && !state.user) { state.pendingCheckout = true; location.replace('#shop'); setTimeout(() => openAuth('Sign in to place your order'), 50); return; }
+  if (h === 'order' && !state.order) { location.replace('#home'); return; }
+  VIEWS.forEach(v => { $('#view-' + v).hidden = v !== h; });
+  if (h === 'shop') renderShop();
+  if (h === 'checkout') renderCheckout();
+  if (h === 'order') renderOrder();
+  curtain.setActive(h === 'home');
+  veil.setActive(h === 'home'); cotton.setActive(h === 'home');
+  if (h === 'home') requestAnimationFrame(scrollFx.update);
+  if (anchor && document.getElementById(anchor)) setTimeout(() => document.getElementById(anchor).scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' }), 30);
+  else scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ---------- Global clicks ---------- */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-pid],[data-cat],[data-nav],[data-open-auth],[data-close],[data-stage],[data-chip-cat],[data-chip-print]');
+  if (!t) return;
+  if (t.dataset.pid) return openProduct(t.dataset.pid);
+  if (t.dataset.cat) return goShop({ cat: t.dataset.cat });
+  if (t.dataset.stage) return setStage(t.dataset.stage);
+  if (t.dataset.chipCat) { state.cat = t.dataset.chipCat; return renderShop(); }
+  if (t.dataset.chipPrint) { state.print = t.dataset.chipPrint; return renderShop(); }
+  if ('openAuth' in t.dataset) return openAuth();
+  if ('close' in t.dataset) return closeOverlay();
+  if (t.dataset.nav) {
+    const n = t.dataset.nav; if (openEl) closeOverlay();
+    if (n === 'prints') { if (location.hash === '#prints') document.getElementById('prints').scrollIntoView({ behavior: 'smooth' }); else location.hash = 'prints'; return; }
+    return goShop(n === 'all' ? {} : { cat: n });
+  }
+});
+$('#stageShop').addEventListener('click', () => goShop({ print: state.stagePrint }));
+$('#headSearch').addEventListener('submit', e => { e.preventDefault(); goShop({ q: $('#headQ').value }); $('#headQ').blur(); });
+$('#mSearch').addEventListener('click', () => { goShop({ cat: state.cat, print: state.print, q: state.q }); setTimeout(() => $('#shopQ').focus(), 80); });
+$('#shopQ').addEventListener('input', e => { state.q = e.target.value; renderShop(); });
+$('#sortSel').addEventListener('change', e => { state.sort = e.target.value; renderShop(); });
+$('#clearFilters').addEventListener('click', () => { Object.assign(state, { cat: 'all', print: 'all', q: '' }); $('#headQ').value = ''; renderShop(); });
+
+/* ---------- Hero scene: two kids build a play tent (SVG + GSAP) ---------- */
+const curtain = (() => {
+  const svg = $('#scene'), hero = $('#heroVisual'), INK = '#22343A';
+  const OUTL = 'fill="none" stroke="rgba(34,52,58,.22)" stroke-width="1.4"';
+  // Older child: Mist Stripe kurta, powder pyjama. Toddler: Little Cloud romper.
+  const kidA = (x, skin = '#C68A5C', hair = '#2B2522') => `
+    <g id="kidA">
+      <ellipse cx="${x}" cy="804" rx="52" ry="7" fill="rgba(34,52,58,.12)"/>
+      <rect x="${x - 22}" y="690" width="18" height="106" rx="9" fill="#AFC3D0"/>
+      <rect x="${x + 4}" y="690" width="18" height="106" rx="9" fill="#B9CCD8"/>
+      <ellipse cx="${x - 16}" cy="797" rx="15" ry="7" fill="#5E7A6C"/><ellipse cx="${x + 16}" cy="797" rx="15" ry="7" fill="#5E7A6C"/>
+      <g id="armA2"><path d="M${x - 27} 588L${x - 35} 658" stroke="#C7D6E0" stroke-width="17" stroke-linecap="round"/><circle cx="${x - 36}" cy="665" r="9" fill="${skin}"/></g>
+      <rect x="${x - 8}" y="548" width="16" height="26" rx="7" fill="${skin}"/>
+      <path d="M${x - 30} 576Q${x} 565 ${x + 30} 576L${x + 42} 703Q${x} 713 ${x - 42} 703Z" fill="url(#p-stripe)"/>
+      <path d="M${x - 30} 576Q${x} 565 ${x + 30} 576L${x + 42} 703Q${x} 713 ${x - 42} 703Z" fill="url(#g-shade)"/>
+      <path d="M${x - 30} 576Q${x} 565 ${x + 30} 576L${x + 42} 703Q${x} 713 ${x - 42} 703Z" ${OUTL}/>
+      <path d="M${x - 9} 572L${x} 590L${x + 9} 572M${x} 590V622" ${OUTL}/>
+      <g id="headA">
+        <ellipse cx="${x + 36}" cy="490" rx="13" ry="21" transform="rotate(28 ${x + 36} 490)" fill="${hair}"/>
+        <circle cx="${x - 40}" cy="520" r="8.5" fill="${skin}"/><circle cx="${x + 40}" cy="520" r="8.5" fill="${skin}"/>
+        <circle cx="${x}" cy="515" r="41" fill="${skin}"/>
+        <path d="M${x - 43} 521C${x - 47} 468 ${x + 47} 461 ${x + 43} 512C${x + 30} 489 ${x + 6} 481 ${x - 14} 491C${x - 27} 498 ${x - 37} 508 ${x - 43} 521Z" fill="${hair}"/>
+        <rect x="${x + 14}" y="480" width="15" height="6" rx="3" fill="#8FA89A" transform="rotate(-18 ${x + 21} 483)"/>
+        <path d="M${x - 21} 509q6-4 12 0M${x + 9} 509q6-4 12 0" stroke="${hair}" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <ellipse class="eye" cx="${x - 14}" cy="522" rx="3.8" ry="4.8" fill="${INK}"/><ellipse class="eye" cx="${x + 14}" cy="522" rx="3.8" ry="4.8" fill="${INK}"/>
+        <circle cx="${x - 25}" cy="536" r="7.5" fill="#E58E76" opacity=".38"/><circle cx="${x + 25}" cy="536" r="7.5" fill="#E58E76" opacity=".38"/>
+        <path d="M${x - 9} 538Q${x} 548 ${x + 9} 538" stroke="${INK}" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+      </g>
+      <g id="armA"><path d="M${x + 27} 588L${x + 34} 658" stroke="#C7D6E0" stroke-width="17" stroke-linecap="round"/><circle cx="${x + 35}" cy="665" r="9" fill="${skin}"/></g>
+    </g>`;
+  const kidB = (x, skin = '#B57B50', hair = '#33281F') => `
+    <g id="kidB">
+      <ellipse cx="${x}" cy="804" rx="40" ry="6" fill="rgba(34,52,58,.12)"/>
+      <rect x="${x - 18}" y="742" width="14" height="52" rx="7" fill="url(#p-cloud)"/><rect x="${x + 4}" y="742" width="14" height="52" rx="7" fill="url(#p-cloud)"/>
+      <ellipse cx="${x - 11}" cy="796" rx="12" ry="6" fill="#F4EFE6" stroke="rgba(34,52,58,.2)"/><ellipse cx="${x + 11}" cy="796" rx="12" ry="6" fill="#F4EFE6" stroke="rgba(34,52,58,.2)"/>
+      <g id="armB2"><path d="M${x + 22} 690L${x + 28} 736" stroke="#D5E1E9" stroke-width="13" stroke-linecap="round"/><circle cx="${x + 29}" cy="742" r="7" fill="${skin}"/></g>
+      <path d="M${x - 25} 682Q${x} 672 ${x + 25} 682Q${x + 37} 722 ${x + 28} 755Q${x} 769 ${x - 28} 755Q${x - 37} 722 ${x - 25} 682Z" fill="url(#p-cloud)"/>
+      <path d="M${x - 25} 682Q${x} 672 ${x + 25} 682Q${x + 37} 722 ${x + 28} 755Q${x} 769 ${x - 28} 755Q${x - 37} 722 ${x - 25} 682Z" fill="url(#g-shade)"/>
+      <path d="M${x - 25} 682Q${x} 672 ${x + 25} 682Q${x + 37} 722 ${x + 28} 755Q${x} 769 ${x - 28} 755Q${x - 37} 722 ${x - 25} 682Z" ${OUTL}/>
+      <path d="M${x - 11} 681Q${x} 691 ${x + 11} 681" stroke="#FBF8F2" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g id="headB">
+        <circle cx="${x - 36}" cy="646" r="7.5" fill="${skin}"/><circle cx="${x + 36}" cy="646" r="7.5" fill="${skin}"/>
+        <circle cx="${x}" cy="642" r="37" fill="${skin}"/>
+        <g fill="${hair}"><circle cx="${x - 16}" cy="611" r="12"/><circle cx="${x}" cy="604" r="14"/><circle cx="${x + 16}" cy="611" r="12"/><circle cx="${x - 28}" cy="624" r="9"/><circle cx="${x + 28}" cy="624" r="9"/><circle cx="${x - 6}" cy="616" r="9"/><circle cx="${x + 8}" cy="617" r="8"/></g>
+        <ellipse class="eye" cx="${x - 12}" cy="648" rx="3.4" ry="4.4" fill="${INK}"/><ellipse class="eye" cx="${x + 12}" cy="648" rx="3.4" ry="4.4" fill="${INK}"/>
+        <circle cx="${x - 22}" cy="660" r="6.5" fill="#E58E76" opacity=".4"/><circle cx="${x + 22}" cy="660" r="6.5" fill="#E58E76" opacity=".4"/>
+        <path d="M${x - 7} 660Q${x} 669 ${x + 7} 660Z" fill="#9A4F3F"/>
+      </g>
+      <g id="armB"><path d="M${x - 22} 690L${x - 28} 736" stroke="#D5E1E9" stroke-width="13" stroke-linecap="round"/><circle cx="${x - 29}" cy="742" r="7" fill="${skin}"/></g>
+    </g>`;
+  const AX = 934, BX = 1223;
+  $('#kids').innerHTML = kidA(AX) + kidB(BX);
+  // Bunting in the four prints, hung along the string.
+  const P0 = [1092, 462], C = [1200, 452], P2 = [1336, 296];
+  $('#flags').innerHTML = [.16, .33, .5, .67, .84].map((t, i) => {
+    const x = (1 - t) ** 2 * P0[0] + 2 * (1 - t) * t * C[0] + t * t * P2[0];
+    const y = (1 - t) ** 2 * P0[1] + 2 * (1 - t) * t * C[1] + t * t * P2[1];
+    const pr = ['fern', 'cloud', 'dot', 'stripe', 'fern'][i];
+    return `<path class="flag" d="M${(x - 12).toFixed(1)} ${y.toFixed(1)}H${(x + 12).toFixed(1)}L${x.toFixed(1)} ${(y + 28).toFixed(1)}Z" fill="url(#p-${pr})" stroke="rgba(34,52,58,.22)"/>`;
+  }).join('');
+
+  const S = {}; ['poleL', 'poleR', 'clothInner', 'maskG', 'door', 'flaps', 'cushion', 'tie', 'armA', 'armA2', 'armB', 'armB2', 'kidA', 'kidB', 'headA', 'headB', 'curL', 'curR', 'curWind'].forEach(id => S[id] = document.getElementById(id));
+  const flags = $$('#flags .flag'), eyes = $$('#scene .eye');
+  const PIV = { armA: [AX + 27, 588], armA2: [AX - 27, 588], armB: [BX - 22, 690], armB2: [BX + 22, 690] };
+  const REST = { armA: -75, armA2: 8, armB: 25, armB2: -10 };
+
+  function layout() {
+    const narrow = innerWidth < 1100;
+    svg.setAttribute('viewBox', narrow ? '780 330 820 510' : '160 90 1440 810');
+    svg.setAttribute('preserveAspectRatio', narrow ? 'xMidYMid meet' : 'xMaxYMax slice');
+  }
+  layout(); addEventListener('resize', layout);
+  const finalPose = () => Object.keys(REST).forEach(k => S[k].setAttribute('transform', `rotate(${REST[k]} ${PIV[k][0]} ${PIV[k][1]})`));
+
+  const g = window.gsap;
+  if (!g || reduceMotion) { finalPose(); return { init() {}, setActive() {} }; }
+
+  Object.keys(PIV).forEach(k => g.set(S[k], { svgOrigin: PIV[k].join(' ') }));
+  g.set(S.poleL, { svgOrigin: '950 800' }); g.set(S.poleR, { svgOrigin: '1222 800' });
+  g.set(S.headA, { svgOrigin: `${AX} 556` }); g.set(S.headB, { svgOrigin: `${BX} 678` });
+  g.set(S.clothInner, { svgOrigin: '1086 470' }); g.set(S.door, { svgOrigin: '1086 586' });
+  g.set(S.kidB, { svgOrigin: `${BX} 800` });
+  g.set(flags, { transformOrigin: '50% 0%' }); g.set([S.tie, ...eyes], { transformOrigin: '50% 50%' });
+  g.set(S.curL, { svgOrigin: '1343 130' }); g.set(S.curR, { svgOrigin: '1547 130' }); g.set(S.curWind, { svgOrigin: '1445 126' });
+
+  let idle = null;
+  function startIdle() {
+    $('#replay').hidden = false;
+    idle && idle.kill();
+    idle = g.timeline({ repeat: -1, defaults: { ease: 'sine.inOut', yoyo: true, repeat: 1 } })
+      .to(S.kidA, { y: -3, duration: 1.5 }, 0)
+      .to(S.kidB, { rotation: 2.5, duration: 1.5 }, 0)
+      .to(S.clothInner, { scaleX: 1.012, duration: 1.5 }, 0)
+      .to(flags, { rotation: i => (i % 2 ? 5 : -5), duration: 1.5 }, 0)
+      .to(S.armB2, { rotation: 12, duration: 1.5 }, 0);
+  }
+  const tl = g.timeline({ paused: true, onComplete: startIdle, defaults: { ease: 'power2.out' } });
+  tl.set(S.poleL, { rotation: 68 }).set(S.poleR, { rotation: -68 }).set(S.maskG, { y: 470 })
+    .set([S.door, S.flaps], { opacity: 0 }).set(S.cushion, { opacity: 0, y: -90 }).set(S.tie, { scale: 0 }).set(flags, { scale: 0, rotation: 0 })
+    .set(S.armA, { rotation: -20 }).set(S.armA2, { rotation: 8 }).set(S.armB, { rotation: 25 }).set(S.armB2, { rotation: -10 })
+    .set([S.kidA, S.kidB], { y: 0, rotation: 0 }).set(S.clothInner, { scaleX: 1, scaleY: 1 })
+    .to(S.armA, { rotation: -42, duration: .45 }, .3)
+    .to(S.poleL, { rotation: 0, duration: 1.15, ease: 'power3.inOut' }, .5)
+    .to(S.armA, { rotation: -75, duration: 1.15, ease: 'power3.inOut' }, .5)
+    .to(S.armB, { rotation: 96, duration: .6 }, 1.0)
+    .to(S.poleR, { rotation: 0, duration: 1.05, ease: 'back.out(1.7)' }, 1.1)
+    .to(S.tie, { scale: 1, duration: .45, ease: 'back.out(3)' }, 2.1)
+    .to(S.armB, { rotation: 124, duration: .4 }, 2.15)
+    .to(S.maskG, { y: 840, duration: 1.5, ease: 'power2.inOut' }, 2.45)
+    .to(S.armB, { rotation: 70, duration: 1.5, ease: 'power2.inOut' }, 2.45)
+    .fromTo(S.clothInner, { scaleX: 1.07, scaleY: .97 }, { scaleX: 1, scaleY: 1, duration: 1.3, ease: 'elastic.out(1,.42)' }, 3.6)
+    .fromTo(S.door, { opacity: 0, scaleY: .2 }, { opacity: 1, scaleY: 1, duration: .55 }, 4.0)
+    .to(S.flaps, { opacity: 1, duration: .35 }, 4.2)
+    .to(S.cushion, { opacity: 1, y: 0, duration: .75, ease: 'bounce.out' }, 4.4)
+    .to(flags, { scale: 1, duration: .5, stagger: .09, ease: 'back.out(2.6)' }, 4.75)
+    .to(S.armA, { rotation: -165, duration: .35 }, 5.6).to(S.armA2, { rotation: 160, duration: .35 }, 5.6)
+    .to(S.armB, { rotation: 160, duration: .35 }, 5.65).to(S.armB2, { rotation: -160, duration: .35 }, 5.65)
+    .to(S.kidA, { y: -16, duration: .2, yoyo: true, repeat: 3, ease: 'power1.out' }, 5.65)
+    .to(S.kidB, { y: -11, duration: .18, yoyo: true, repeat: 3, ease: 'power1.out' }, 5.7)
+    .to(S.armA, { rotation: REST.armA, duration: .6, ease: 'power2.inOut' }, 6.6).to(S.armA2, { rotation: REST.armA2, duration: .6, ease: 'power2.inOut' }, 6.6)
+    .to(S.armB, { rotation: REST.armB, duration: .6, ease: 'power2.inOut' }, 6.6).to(S.armB2, { rotation: REST.armB2, duration: .6, ease: 'power2.inOut' }, 6.6);
+
+  // Always-on life: curtains breathing, blinking.
+  g.to(S.curL, { skewX: 1.5, duration: 3.4, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+  g.to(S.curR, { skewX: -1.3, duration: 3.9, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: .6 });
+  (function blink() { g.to(eyes, { scaleY: .1, duration: .07, yoyo: true, repeat: 1 }); setTimeout(blink, 2600 + Math.random() * 2600); })();
+
+  // Cursor: heads follow, curtains catch the breeze.
+  const qa = g.quickTo(S.headA, 'rotation', { duration: .7, ease: 'power3' }), qb = g.quickTo(S.headB, 'rotation', { duration: .7, ease: 'power3' });
+  const qw = g.quickTo(S.curWind, 'skewX', { duration: 1.4, ease: 'power2' });
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  let lastX = null, calm;
+  hero.addEventListener('pointermove', e => {
+    const m = svg.getScreenCTM(); if (!m) return;
+    const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+    qa(clamp((pt.x - AX) / 45, -9, 9)); qb(clamp((pt.x - BX) / 45, -9, 9));
+    if (lastX !== null) qw(clamp((e.clientX - lastX) * .35, -3.5, 3.5));
+    lastX = e.clientX; clearTimeout(calm); calm = setTimeout(() => qw(0), 160);
+  });
+  hero.addEventListener('pointerleave', () => { qa(0); qb(0); qw(0); lastX = null; });
+
+  $('#replay').addEventListener('click', () => { idle && idle.kill(); idle = null; tl.restart(); });
+  let started = false;
+  new IntersectionObserver(es => { if (es[0].isIntersecting && !started && active) { started = true; setTimeout(() => tl.play(), 450); } }).observe(hero);
+  let active = true;
+  return { init() { tl.progress(0); }, setActive(a) { active = a; } };
+})();
+
+/* ---------- 3D cotton that falls from the hero into the flowchart ---------- */
+const cotton = (() => {
+  const cv = $('#cottonFx'), ctx = cv.getContext('2d');
+  const P = []; let W = 0, H = 0, dpr = 1, raf = 0, last = 0, wind = 0, enabled = true;
+  const sprite = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 96; const g = c.getContext('2d');
+    const gr = g.createRadialGradient(34, 32, 3, 48, 48, 46);
+    gr.addColorStop(0, '#FFFFFF'); gr.addColorStop(.55, '#F6F2EA'); gr.addColorStop(1, '#D4CBBB');
+    g.fillStyle = gr; g.beginPath(); g.arc(48, 48, 46, 0, Math.PI * 2); g.fill(); return c;
+  })();
+  function size() { dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  size(); addEventListener('resize', size);
+  function target() {
+    const n = $('#fnCotton .disc'); if (!n) return null; const r = n.getBoundingClientRect();
+    return r.width ? { x: r.left + r.width / 2, y: r.top + r.height / 2 + scrollY, r: r.width / 2 } : null;
+  }
+  function pulse() { const n = $('#fnCotton'); n.classList.remove('got'); void n.getBoundingClientRect(); n.classList.add('got'); }
+  function spawn(x, y) {
+    if (!enabled || reduceMotion || P.length > 34) return;
+    P.push({ x, y, z: -160 + Math.random() * 400, vx: (Math.random() - .5) * 50, vy: -30 + Math.random() * 40,
+      rx: Math.random() * 6.3, ry: Math.random() * 6.3, vrx: (Math.random() - .5) * 2.6, vry: (Math.random() - .5) * 2.6,
+      ph: Math.random() * 6.3, s: (.75 + Math.random() * .55) * (W < 600 ? .7 : 1), a: 0, dying: 0 });
+    loop();
+  }
+  function drawBoll(p, sx, sy) {
+    const persp = 620 / (620 + p.z), sc = persp * p.s * (1 - Math.min(1, p.dying) * .85);
+    if (sc <= .02) return;
+    const R = 10 * sc, cr = Math.cos(p.rx), sr = Math.sin(p.rx), cy = Math.cos(p.ry), sy2 = Math.sin(p.ry);
+    const pts = [];
+    for (let k = 0; k < 5; k++) {
+      const a = k * 1.2566 + p.ph, x = Math.cos(a) * R, y = Math.sin(a) * R;
+      const y1 = y * cr, z1 = y * sr, x2 = x * cy + z1 * sy2, z2 = -x * sy2 + z1 * cy;
+      pts.push([x2, y1, z2]);
+    }
+    pts.push([0, 0, R * .35 * cr * cy]);
+    pts.sort((a, b) => a[2] - b[2]);
+    const facing = cr * cy;
+    const alpha = p.a * (p.z > 140 ? .72 : 1) * (1 - Math.max(0, p.dying - .5));
+    ctx.globalAlpha = alpha;
+    const star = () => { ctx.save(); ctx.translate(sx, sy); ctx.rotate(p.ry * .6); ctx.fillStyle = 'rgba(150,118,90,.6)';
+      for (let k = 0; k < 4; k++) { ctx.rotate(Math.PI / 2); ctx.beginPath(); ctx.moveTo(-1.8 * sc, 0); ctx.lineTo(0, -R * 1.55); ctx.lineTo(1.8 * sc, 0); ctx.fill(); } ctx.restore(); };
+    if (facing > 0) star();
+    for (const q of pts) { const r = (13 * sc) * (1 + q[2] / (R * 7)); ctx.drawImage(sprite, sx + q[0] - r, sy + q[1] - r, r * 2, r * 2); }
+    if (facing <= 0) star();
+    ctx.globalAlpha = 1;
+  }
+  function step(ts) {
+    raf = 0; const dt = Math.min(.034, (ts - (last || ts)) / 1000); last = ts;
+    const T = target(); ctx.clearRect(0, 0, W, H);
+    for (let i = P.length - 1; i >= 0; i--) {
+      const p = P[i]; p.a = Math.min(1, p.a + dt * 3);
+      if (p.dying) {
+        p.dying += dt * 3.2; if (T) { p.x += (T.x - p.x) * .18; p.y += (T.y - p.y) * .18; } p.z *= .85;
+        if (p.dying > 1.2) { P.splice(i, 1); continue; }
+      } else {
+        const term = 140 + p.s * 70;
+        p.vy += (term - p.vy) * dt * 1.3;
+        p.vx += (Math.sin(ts * .0013 + p.ph) * 42 + wind * 70) * dt; p.vx *= 1 - dt * .9;
+        if (T) {
+          const dy = T.y - p.y;
+          if (dy < 600) {
+            // Ease into the Cotton node: steer sideways first, then home in on it.
+            const k = 1 - Math.max(0, dy) / 600; p.vx += (T.x - p.x) * k * k * dt * 4; p.vx *= 1 - k * dt * 2.4; p.z *= 1 - k * dt * 2.6;
+            if (dy < 200) { const h = Math.min(1, dt * (2 + (1 - Math.max(0, dy) / 200) * 4)); p.x += (T.x - p.x) * h; p.y += (T.y - p.y) * h * .6; }
+          }
+          if (Math.hypot(T.x - p.x, T.y - p.y) < T.r * .9) { p.dying = .001; pulse(); }
+          if (p.y > T.y + 260) { p.a -= dt * 4; if (p.a <= 0) { P.splice(i, 1); continue; } }
+        } else if (p.y > scrollY + H + 400) { P.splice(i, 1); continue; }
+        p.x += p.vx * dt; p.y += p.vy * dt; p.rx += p.vrx * dt; p.ry += p.vry * dt;
+      }
+      const sy = p.y - scrollY; if (sy > -80 && sy < H + 80) drawBoll(p, p.x, sy);
+    }
+    wind *= .96;
+    if (P.length) loop(); else ctx.clearRect(0, 0, W, H);
+  }
+  function loop() { if (!raf && P.length) raf = requestAnimationFrame(step); }
+  return { spawn, gust(v) { wind = Math.max(-1, Math.min(1, wind + v)); }, setActive(a) { enabled = a; if (!a) { P.length = 0; ctx.clearRect(0, 0, W, H); } } };
+})();
+
+/* ---------- Frosted voile over the live scene ---------- */
+const veil = (() => {
+  const stage = $('#stage'), hero = $('#heroVisual'), vl = $('#voile'), cv = $('#curtain'), ctx = cv.getContext('2d');
+  let W = 0, H = 0, dpr = 1, t = 0, raf = 0, inView = true, active = true, last = 0;
+  let open = .08, openT = .08, prev = .08, wind = 0, scrollOpen = .08, ptrOpen = 0, lastMove = 0, acc = 0;
+  const ptr = { x: 0, y: 0, sx: 0, sy: 0, on: 0, onT: 0 };
+  let gapL = 0, gapR = 0;
+  function resize() {
+    const r = stage.getBoundingClientRect(); if (!r.width) return;
+    dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); draw();
+  }
+  const F = 10, N = 26;
+  function geo(x0, x1, side) {
+    const top = -8, bot = H + 10, cols = [], sig = Math.max(70, W * .13);
+    for (let i = 0; i <= F; i++) {
+      const u = i / F, bx = x0 + (x1 - x0) * u, outer = side > 0 ? 1 - u : u, free = 1 - outer * .7, pts = [];
+      for (let j = 0; j <= N; j++) {
+        const v = j / N, y = top + (bot - top) * v;
+        let dx = Math.sin(t * .00095 + i * 1.6 + v * 2.1) * (1.5 + 9 * v) * free + wind * v * v * 60 * free;
+        if (ptr.on > .01) { const ddx = bx + dx - ptr.sx, ddy = y - ptr.sy, g = Math.exp(-(ddx * ddx + ddy * ddy) / (2 * sig * sig)); dx += g * 46 * (.3 + v) * Math.sign(ddx || side) * free * ptr.on; }
+        pts.push([bx + dx, y]);
+      }
+      cols.push(pts);
+    }
+    return cols;
+  }
+  const outline = cols => { let d = 'M' + cols[0].map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L'); for (let j = N; j >= 0; j--) d += 'L' + cols[F][j][0].toFixed(1) + ' ' + cols[F][j][1].toFixed(1); return d + 'Z'; };
+  function shade(cols, side) {
+    for (let i = 0; i < F; i++) {
+      const a = cols[i], b = cols[i + 1];
+      ctx.beginPath(); ctx.moveTo(a[0][0], a[0][1]);
+      for (let j = 1; j <= N; j++) ctx.lineTo(a[j][0], a[j][1]);
+      for (let j = N; j >= 0; j--) ctx.lineTo(b[j][0], b[j][1]);
+      ctx.closePath();
+      const mid = Math.floor(N * .55), g = ctx.createLinearGradient(a[mid][0], 0, b[mid][0], 0);
+      if (i % 2 === 0) { g.addColorStop(0, 'rgba(255,255,252,.5)'); g.addColorStop(.6, 'rgba(255,255,252,.08)'); g.addColorStop(1, 'rgba(34,52,58,.07)'); }
+      else { g.addColorStop(0, 'rgba(34,52,58,.07)'); g.addColorStop(.4, 'rgba(255,255,252,.05)'); g.addColorStop(1, 'rgba(255,255,252,.44)'); }
+      ctx.fillStyle = g; ctx.fill();
+    }
+    const inner = side > 0 ? cols[F] : cols[0];
+    ctx.beginPath(); inner.forEach((p, j) => j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+    ctx.strokeStyle = 'rgba(255,255,252,.9)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.beginPath(); inner.forEach((p, j) => j ? ctx.lineTo(p[0] + side * 7, p[1]) : ctx.moveTo(p[0] + side * 7, p[1]));
+    ctx.strokeStyle = 'rgba(79,107,94,.38)'; ctx.lineWidth = 1; ctx.stroke();
+  }
+  function draw() {
+    if (!W) return;
+    const narrow = W < 760, c = narrow ? .52 : .64, gap = narrow ? -.01 : .045, k = 1 - open * .965;
+    gapL = W * (c - gap) * k; gapR = W - W * (1 - c - gap) * k;
+    const L = geo(-6, gapL + 2, 1), R = geo(gapR - 2, W + 6, -1);
+    const path = `path('${outline(L)} ${outline(R)}')`;
+    vl.style.clipPath = path; vl.style.webkitClipPath = path;
+    ctx.clearRect(0, 0, W, H); shade(L, 1); shade(R, -1);
+  }
+  function release() {
+    // As the curtain parts, cotton tumbles out of the gap.
+    const d = open - prev; prev = open; if (d <= 0) return;
+    acc += d * (W < 760 ? 18 : 48);
+    const r = stage.getBoundingClientRect();
+    while (acc >= 1) {
+      acc -= 1;
+      const edge = Math.random() < .5 ? gapL : gapR, x = r.left + edge + (Math.random() - .5) * 70;
+      cotton.spawn(x, r.top + scrollY + H * (.06 + Math.random() * .42));
+    }
+  }
+  function frame(ts) {
+    raf = 0; const dt = Math.min(.05, (ts - (last || ts)) / 1000); last = ts; t = ts;
+    if (ts - lastMove > 1500) ptrOpen = Math.max(0, ptrOpen - dt * .16);
+    openT = Math.max(scrollOpen, .08 + ptrOpen);
+    ptr.sx += (ptr.x - ptr.sx) * .07; ptr.sy += (ptr.y - ptr.sy) * .07; ptr.on += (ptr.onT - ptr.on) * .06;
+    wind *= .95; open += (openT - open) * .07;
+    draw(); release(); loop();
+  }
+  function loop() { if (!reduceMotion && inView && active && !document.hidden && !raf) raf = requestAnimationFrame(frame); }
+  function onScroll() {
+    scrollOpen = .08 + .92 * Math.min(1, Math.max(0, scrollY / Math.max(300, H * .75)));
+    if (reduceMotion) { open = Math.max(.5, scrollOpen); draw(); }
+  }
+  hero.addEventListener('pointermove', e => {
+    const r = stage.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    if (ptr.onT === 0) { ptr.sx = x; ptr.sy = y; }
+    const dx = x - ptr.x;
+    wind = Math.max(-.8, Math.min(.8, wind + dx * .004)); cotton.gust(dx * .002);
+    ptrOpen = Math.min(.8, ptrOpen + (Math.abs(dx) + Math.abs(y - ptr.y) * .5) / Math.max(W, 1) * .3);
+    lastMove = performance.now(); ptr.x = x; ptr.y = y; ptr.onT = 1;
+    const n = $('#heroNote'); if (n && !n.dataset.gone) { n.dataset.gone = 1; n.style.opacity = '0'; }
+  });
+  hero.addEventListener('pointerleave', () => { ptr.onT = 0; });
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', loop);
+  new IntersectionObserver(es => { inView = es[0].isIntersecting; loop(); }).observe(stage);
+  if (matchMedia('(hover: none)').matches) $('#heroNote').textContent = 'Scroll to open the curtain';
+  if (reduceMotion) $('#heroNote').hidden = true;
+  return { init() { resize(); onScroll(); open = prev = reduceMotion ? Math.max(.5, scrollOpen) : scrollOpen; draw(); loop(); }, setActive(a) { active = a; if (a) { requestAnimationFrame(resize); loop(); } } };
+})();
+
+/* ---------- Flowchart products and scroll-stitched thread ---------- */
+const flow = (() => {
+  const items = [['pajama', 'fern', 'Clothing', 'var(--t-sage)'], ['curtain', 'fern', 'Curtains', 'var(--t-powder)'], ['quilt', 'dot', 'Quilts', 'var(--t-honey)'], ['cushion', 'cloud', 'Cushions', 'var(--t-powder)']];
+  $('#fnProducts').innerHTML = items.map(([sh, pr, label, tint], i) => {
+    const cx = 64 + i * 132;
+    return `<g class="fprod" data-i="${i}"><g transform="translate(${cx} 644)"><g class="fnode">
+      <rect class="ring" x="-58" y="-58" width="116" height="116" rx="22"/>
+      <rect x="-52" y="-52" width="104" height="104" rx="18" style="fill:${tint}"/>
+      <svg x="-44" y="-50" width="88" height="103" viewBox="0 0 240 280">${SHAPES[sh](pr)}</svg>
+    </g></g><text class="fl" x="${cx}" y="734" text-anchor="middle">${label}</text></g>`;
+  }).join('');
+  const th1 = $('#th1'), th2 = $('#th2'), br = $$('#flow .br'), bead = $('#bead'), fig = $('#flow');
+  const nodes = [$('#fnCotton'), $('#fnThread'), $('#fnFabric')], prods = $$('#fnProducts .fnode');
+  const seg = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
+  function set(p) {
+    const s1 = seg(p, .05, .3), s2 = seg(p, .35, .6), s3 = seg(p, .65, .95);
+    th1.style.strokeDashoffset = 1 - s1; th2.style.strokeDashoffset = 1 - s2;
+    br.forEach(b => b.style.strokeDashoffset = 1 - s3);
+    nodes[0].classList.toggle('on', p > .02); nodes[1].classList.toggle('on', s1 >= 1); nodes[2].classList.toggle('on', s2 >= 1);
+    prods.forEach(n => n.classList.toggle('on', s3 >= 1));
+    const active = s1 < 1 ? [th1, s1] : s2 < 1 ? [th2, s2] : s3 < 1 ? [br[0], s3] : null;
+    if (active && p > .05) { const L = active[0].getTotalLength(), pt = active[0].getPointAtLength(L * active[1]); bead.setAttribute('cx', pt.x); bead.setAttribute('cy', pt.y); bead.style.opacity = 1; }
+    else bead.style.opacity = 0;
+  }
+  if (reduceMotion) set(1);
+  return {
+    update(vh) {
+      if (reduceMotion) return;
+      const r = fig.getBoundingClientRect();
+      set(Math.min(1, Math.max(0, (vh * .82 - r.top) / (r.height * .9))));
+    }
+  };
+})();
+
+/* ---------- Scroll-lit statement and photo parallax ---------- */
+const scrollFx = (() => {
+  const say = $('#say');
+  say.innerHTML = say.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
+  const words = $$('.w', say);
+  const par = $$('[data-speed]');
+  if (reduceMotion) { words.forEach(w => w.classList.add('lit')); }
+  let ticking = false;
+  function update() {
+    ticking = false; const vh = innerHeight;
+    if (!reduceMotion) {
+      const r = say.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (vh * .85 - r.top) / (r.height + vh * .35)));
+      const n = Math.round(p * words.length);
+      words.forEach((w, i) => w.classList.toggle('lit', i < n));
+      flow.update(vh);
+      par.forEach(el => {
+        const b = el.parentElement.getBoundingClientRect(); if (b.bottom < -100 || b.top > vh + 100) return;
+        const c = (b.top + b.height / 2 - vh / 2); el.style.transform = `translate3d(0,${(-c * +el.dataset.speed).toFixed(1)}px,0)`;
+      });
+    }
+  }
+  const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', req, { passive: true }); addEventListener('resize', req);
+  return { update };
+})();
+
+/* ---------- Boot ---------- */
+renderHeader(); renderHome(); curtain.init(); veil.init(); scrollFx.update();
+addEventListener('hashchange', route); route();
+})();
+</script>
+
+</body>
+</html>
